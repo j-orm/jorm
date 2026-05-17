@@ -24,18 +24,26 @@ mkdir -p "$BIN_DIR"
 echo "Downloading $DOWNLOAD_URL ..."
 curl -sSL -f -o "$BIN_DIR/jorm.jar" "$DOWNLOAD_URL"
 
+# For Windows users running in Git Bash/Cygwin, we need to translate the path
+# because Java (a native Windows program) doesn't understand /c/Users/ or /root/ paths
+if uname -s | grep -qi "mingw\|msys\|cygwin"; then
+    NATIVE_JAR_PATH=$(cygpath -w "$BIN_DIR/jorm.jar")
+else
+    NATIVE_JAR_PATH="$HOME/.jorm/bin/jorm.jar"
+fi
+
 # Create the 'jorm' wrapper script for Bash
-cat << 'EOF' > "$BIN_DIR/jorm"
+cat << EOF > "$BIN_DIR/jorm"
 #!/usr/bin/env bash
-java -jar "$HOME/.jorm/bin/jorm.jar" "$@"
+java -jar "$NATIVE_JAR_PATH" "\$@"
 EOF
 
 chmod +x "$BIN_DIR/jorm"
 
 # Create the 'jorm.cmd' wrapper script for Windows (Command Prompt / PowerShell)
-cat << 'EOF' > "$BIN_DIR/jorm.cmd"
+cat << EOF > "$BIN_DIR/jorm.cmd"
 @echo off
-java -jar "%~dp0jorm.jar" %*
+java -jar "$NATIVE_JAR_PATH" %*
 EOF
 
 echo ""
