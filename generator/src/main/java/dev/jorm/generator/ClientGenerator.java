@@ -92,6 +92,13 @@ public class ClientGenerator {
                     .build();
             clientBuilder.addMethod(findManyFluent);
 
+            // Detect ID field type dynamically
+            SchemaModel.FieldModel idField = entityModel.fields().stream()
+                    .filter(f -> f.attributes().stream().anyMatch(a -> a.name().equals("id")))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("No @id field found for model " + entityModel.name()));
+            Class<?> idJavaType = getJavaType(idField.type());
+
             // withIncludes method
             MethodSpec withIncludes = generateWithIncludes(entityModel, modelClass, idField);
             clientBuilder.addMethod(withIncludes);
@@ -126,13 +133,6 @@ public class ClientGenerator {
                     .addStatement("return null") 
                     .build();
             clientBuilder.addMethod(create);
-
-            // Detect ID field type dynamically
-            SchemaModel.FieldModel idField = entityModel.fields().stream()
-                    .filter(f -> f.attributes().stream().anyMatch(a -> a.name().equals("id")))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("No @id field found for model " + entityModel.name()));
-            Class<?> idJavaType = getJavaType(idField.type());
 
             // update method (Fluent API)
             MethodSpec update = MethodSpec.methodBuilder("update")
