@@ -130,6 +130,11 @@ curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
+**No Windows (Command Prompt / CMD):**
+```cmd
+powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
+```
+
 ---
 
 ## 📚 Documentação Completa

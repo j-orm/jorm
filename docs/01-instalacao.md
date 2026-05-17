@@ -39,6 +39,13 @@ Para os programadores Windows que prefiram não usar o Scoop, disponibilizamos u
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
+**No Windows (Command Prompt / CMD):**
+Se estiver a usar o CMD clássico, pode delegar a execução ao PowerShell com este comando:
+
+```cmd
+powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
+```
+
 > **Atenção:** É estritamente necessário ter o **Java 21** instalado no sistema.
 
 ## 2. Iniciar um Novo Projeto
