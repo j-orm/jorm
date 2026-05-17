@@ -57,6 +57,25 @@ model User {
 
 ---
 
+## 🔄 Como Funcionam as Migrações?
+
+Em vez de escrever scripts SQL complexos manualmente ou usar ferramentas externas (como o Flyway ou Liquibase), a Jorm cuida de todo o ciclo de vida da sua base de dados.
+
+Quando executa o comando de desenvolvimento:
+
+```bash
+jorm migrate dev
+```
+
+A Jorm executa o seguinte fluxo automaticamente de forma transparente:
+1. **Lê** o ficheiro `schema.jorm`.
+2. **Compara** o seu modelo com o estado atual da base de dados (usando JDBC metadata).
+3. **Gera** o SQL necessário de forma automática (`CREATE TABLE`, `ALTER TABLE`, etc.).
+4. **Aplica** as alterações de imediato na base de dados conectada.
+5. **Guarda** o histórico num ficheiro local (exemplo: `migrations/001_add_user_table.sql`) para controlo de versão e futura implementação em produção.
+
+---
+
 ## ✨ Funcionalidades Atuais
 
 A versão BETA já inclui os pilares fundamentais para começar a desenvolver:
