@@ -51,10 +51,14 @@ public class MigrateDevCommand implements Callable<Integer> {
 
             Printer.info("Starting migrations execution...");
             
-            // Generate unique DB name for isolated execution
-            String dbName = "jorm_db_" + java.util.UUID.randomUUID().toString().replace("-", "");
-            ConnectionManager connManager = new ConnectionManager(
-                    "jdbc:h2:mem:" + dbName + ";DB_CLOSE_DELAY=-1;MODE=PostgreSQL;NON_KEYWORDS=USER", "sa", "");
+            // Try to get real connection
+            ConnectionManager connManager;
+            try {
+                connManager = ConnectionManager.fromEnv();
+            } catch (Exception ex) {
+                spinner.stopWithError(ex.getMessage() + " Please set DATABASE_URL.");
+                return 1;
+            }
             
             MigrationRunner runner = new MigrationRunner(connManager);
             runner.runMigrations(migrationsDir);

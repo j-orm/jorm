@@ -70,6 +70,13 @@ public class MigrationRunner {
         }
     }
 
+    public List<String> getAppliedMigrationsPublic() throws SQLException {
+        try (Connection conn = connectionManager.getConnection()) {
+            ensureMigrationTableExists(conn);
+            return getAppliedMigrations(conn);
+        }
+    }
+
     private List<String> getAppliedMigrations(Connection conn) throws SQLException {
         List<String> migrations = new ArrayList<>();
         String sql = "SELECT name FROM _jorm_migrations ORDER BY id ASC";

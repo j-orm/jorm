@@ -392,6 +392,15 @@ Maven e Gradle são ferramentas indispensáveis para gerenciar projetos Java. O 
 
 ### 10.2. Integração com Frameworks (Spring Boot, Quarkus, Micronaut)
 
+jorm migrate dev: Migrations: foca no diff automático.
+Jorm tem de fazer assim:
+
+# 1. Lê schema.jorm
+# 2. Compara com estado do DB (via JDBC metadata)
+# 3. Gera SQL automaticamente (ALTER TABLE, etc)
+# 4. Aplica
+# 5. Guarda em migrations/001_add_user_table.sql
+
 Para facilitar a adoção em aplicações modernas, o Jorm terá módulos de integração para *frameworks* populares:
 
 - **Injeção de Dependência**: Serão fornecidos *starters* ou módulos de integração (e.g., `jorm-spring-boot-starter`, `jorm-quarkus-extension`) que configurarão automaticamente o `JormClient` como um *bean* ou componente injetável. Isso permitirá que os desenvolvedores injetem o `JormClient` diretamente nos seus serviços e controladores.

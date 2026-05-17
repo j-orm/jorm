@@ -8,7 +8,7 @@ echo "Downloading Jorm CLI..."
 
 # Determine the version
 JORM_VERSION="0.1.0-SNAPSHOT"
-DOWNLOAD_URL="https://github.com/seu-user/jorm/releases/download/v${JORM_VERSION}/jorm-cli-standalone.jar"
+DOWNLOAD_URL="https://github.com/j-orm/jorm/releases/download/v${JORM_VERSION}/jorm-cli-standalone.jar"
 
 # Local installation directory
 JORM_DIR="$HOME/.jorm"

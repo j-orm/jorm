@@ -11,7 +11,7 @@
 
     <name>Jorm</name>
     <description>A Schema-First Modern ORM for Java</description>
-    <url>https://github.com/seu-user/jorm</url>
+    <url>https://github.com/j-orm/jorm</url>
 
     <licenses>
         <license>
@@ -25,14 +25,14 @@
         <developer>
             <id>jorm-team</id>
             <name>Jorm Team</name>
-            <email>hello@jorm.dev</email>
+            <email>suport@jorm.dev</email>
         </developer>
     </developers>
 
     <scm>
         <connection>scm:git:git://github.com/seu-user/jorm.git</connection>
-        <developerConnection>scm:git:ssh://github.com:seu-user/jorm.git</developerConnection>
-        <url>http://github.com/seu-user/jorm/tree/main</url>
+        <developerConnection>scm:git:ssh://github.com:j-orm/jorm.git</developerConnection>
+        <url>http://github.com/j-orm/jorm/tree/main</url>
     </scm>
 
     <modules>
@@ -42,6 +42,7 @@
         <module>client</module>
         <module>db</module>
         <module>cli</module>
+        <module>jorm-spring-boot-starter</module>
     </modules>
 
     <properties>

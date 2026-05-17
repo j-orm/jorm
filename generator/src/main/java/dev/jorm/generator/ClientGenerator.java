@@ -208,6 +208,21 @@ public class ClientGenerator {
         TypeSpec.Builder mainClientBuilder = TypeSpec.classBuilder("Jorm")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
+        boolean isSpring = false;
+        if (schema.config() != null) {
+            for (SchemaModel.ConfigEntry entry : schema.config()) {
+                if ("framework".equals(entry.key()) && "spring".equals(entry.value())) {
+                    isSpring = true;
+                    break;
+                }
+            }
+        }
+
+        if (isSpring) {
+            ClassName repositoryClass = ClassName.get("org.springframework.stereotype", "Repository");
+            mainClientBuilder.addAnnotation(repositoryClass);
+        }
+
         mainClientBuilder.addField(FieldSpec.builder(queryExecutorClass, "executor", Modifier.PRIVATE, Modifier.FINAL).build());
 
         MethodSpec constructor = MethodSpec.constructorBuilder()
@@ -559,9 +574,6 @@ public class ClientGenerator {
         
         // Fallback guess: sourceEntity name + "Id" (e.g. userId)
         return sourceEntity.substring(0, 1).toLowerCase() + sourceEntity.substring(1) + "Id";
-    
-        return type.equals("String") || type.equals("Int") || type.equals("Float") 
-                || type.equals("Boolean") || type.equals("DateTime");
     }
 
     private TypeSpec generateDataBuilder(SchemaModel.EntityModel entityModel) {
