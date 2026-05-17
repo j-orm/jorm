@@ -119,8 +119,15 @@ scoop install jorm
 ```
 
 **Instalação Universal**
+
+**No macOS ou Linux (Bash/Zsh):**
 ```bash
 curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
+```
+
+**No Windows (PowerShell):**
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
 ---

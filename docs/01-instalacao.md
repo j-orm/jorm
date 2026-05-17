@@ -23,9 +23,20 @@ scoop install jorm
 sdk install jorm
 ```
 
-### Instalação Universal (Curl)
+### Instalação Universal
+
+**No macOS ou Linux (Bash/Zsh):**
+Se não usar nenhum gestor de pacotes, pode instalar a CLI diretamente usando o nosso script oficial:
+
 ```bash
 curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
+```
+
+**No Windows (PowerShell):**
+Para os programadores Windows que prefiram não usar o Scoop, disponibilizamos um script nativo:
+
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
 > **Atenção:** É estritamente necessário ter o **Java 21** instalado no sistema.
