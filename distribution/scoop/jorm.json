@@ -1,0 +1,20 @@
+{
+    "version": "0.1.0",
+    "description": "A Schema-First Modern ORM for Java",
+    "homepage": "https://jorm.dev",
+    "license": "MIT",
+    "suggest": {
+        "java": [
+            "java/openjdk21"
+        ]
+    },
+    "url": "https://github.com/SEU_USUARIO/jorm/releases/download/v0.1.0/jorm-cli-standalone.jar#/jorm.jar",
+    "hash": "COLOQUE_AQUI_O_SHA256_DO_JAR",
+    "bin": "jorm.jar",
+    "checkver": {
+        "github": "https://github.com/SEU_USUARIO/jorm"
+    },
+    "autoupdate": {
+        "url": "https://github.com/SEU_USUARIO/jorm/releases/download/v$version/jorm-cli-standalone.jar#/jorm.jar"
+    }
+}

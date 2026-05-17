@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.jorm</groupId>
+    <artifactId>jorm-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Jorm</name>
+    <description>A Schema-First Modern ORM for Java</description>
+    <url>https://github.com/seu-user/jorm</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>jorm-team</id>
+            <name>Jorm Team</name>
+            <email>hello@jorm.dev</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/seu-user/jorm.git</connection>
+        <developerConnection>scm:git:ssh://github.com:seu-user/jorm.git</developerConnection>
+        <url>http://github.com/seu-user/jorm/tree/main</url>
+    </scm>
+
+    <modules>
+        <module>core</module>
+        <module>parser</module>
+        <module>generator</module>
+        <module>client</module>
+        <module>db</module>
+        <module>cli</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+</project>
