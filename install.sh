@@ -6,24 +6,24 @@ set -e
 
 echo "Downloading Jorm CLI..."
 
-# Determinar a versão (pode ser hardcoded para MVP ou usar tags do GitHub Releases futuramente)
+# Determine the version
 JORM_VERSION="0.1.0-SNAPSHOT"
 DOWNLOAD_URL="https://github.com/seu-user/jorm/releases/download/v${JORM_VERSION}/jorm-cli-standalone.jar"
 
-# Diretório de instalação local
+# Local installation directory
 JORM_DIR="$HOME/.jorm"
 BIN_DIR="$JORM_DIR/bin"
 
 mkdir -p "$BIN_DIR"
 
-# Fazer o download do JAR (Por agora criamos um mock se não houver URL real)
+# Download the JAR (mocking it for now if no real URL exists)
 # curl -sSL -f -o "$BIN_DIR/jorm.jar" "$DOWNLOAD_URL"
-# Como ainda não temos releases publicadas, este script servirá como placeholder
-echo "Nota: Isto é um instalador Universal de demonstração."
-echo "Para testar localmente, compile com 'mvn clean package' no diretório raiz"
-echo "e copie 'cli/target/jorm-cli-standalone.jar' para '$BIN_DIR/jorm.jar'."
+# As we don't have published releases yet, this script serves as a placeholder
+echo "Note: This is a demo Universal installer."
+echo "To test locally, compile with 'mvn clean package' in the root directory"
+echo "and copy 'cli/target/jorm-cli-standalone.jar' to '$BIN_DIR/jorm.jar'."
 
-# Criar o script 'jorm'
+# Create the 'jorm' wrapper script
 cat << 'EOF' > "$BIN_DIR/jorm"
 #!/bin/sh
 exec java -jar "$HOME/.jorm/bin/jorm.jar" "$@"
