@@ -1,0 +1,46 @@
+# Passo 1: Instalação e Inicialização 🚀
+
+Bem-vindo à documentação oficial da Jorm! Este guia vai ajudar a preparar o seu ambiente para utilizar o ORM mais rápido e moderno do ecossistema Java.
+
+## 1. Instalar a CLI da Jorm
+
+A CLI da Jorm é a ferramenta principal para gerar código e gerir a sua base de dados. Escolha o método mais adequado ao seu sistema operativo.
+
+### macOS / Linux (Homebrew)
+```bash
+brew tap j-orm/jorm
+brew install jorm
+```
+
+### Windows (Scoop)
+```powershell
+scoop bucket add jorm https://github.com/j-orm/jorm
+scoop install jorm
+```
+
+### Programadores Java (SDKMAN!)
+```bash
+sdk install jorm
+```
+
+### Instalação Universal (Curl)
+```bash
+curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
+```
+
+> **Atenção:** É estritamente necessário ter o **Java 21** instalado no sistema.
+
+## 2. Iniciar um Novo Projeto
+
+Navegue até à raiz do seu projeto Java e execute o comando de inicialização.
+
+```bash
+cd o-meu-projeto-java
+jorm init
+```
+
+Este comando cria automaticamente uma pasta oculta chamada `.jorm` com um ficheiro de exemplo `schema.jorm`. Este ficheiro é o "coração" da sua base de dados e do código Java que será gerado.
+
+## 3. Próximos Passos
+
+Agora que a Jorm está instalada, avance para o **Passo 2** para aprender a escrever o seu primeiro schema.
