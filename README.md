@@ -13,7 +13,47 @@
 
 O ecossistema Java precisava de uma lufada de ar fresco na interação com bases de dados. Inspirado na simplicidade do Prisma (no mundo TypeScript), a **Jorm** é um ORM desenhado para a era do Java 21 e do GraalVM. 
 
-Escreva o seu modelo de dados num ficheiro declarativo simples, gere código Java 100% tipado estaticamente, e esqueça as anotações complexas e os problemas de desempenho causados pela *reflection*.
+---
+
+## 💡 O Que a Jorm Vem Resolver?
+
+Durante décadas, o ecossistema Java confiou em ORMs pesados (como o Hibernate ou JPA) que exigem dezenas de anotações, classes mutáveis e dependem fortemente de *reflection*. Isso resulta em tempos de arranque lentos, uso excessivo de memória e dificuldade em compilar nativamente para GraalVM.
+
+A Jorm resolve este problema mudando completamente o paradigma: **Schema-First e geração de código nativo.**
+
+### ❌ Como era antes (JPA / Hibernate)
+Para criar uma simples tabela de utilizadores, o código ficava poluído com anotações e código repetitivo (*boilerplate*):
+
+```java
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    // + Getters, Setters, Construtores vazios, equals() e hashCode() ...
+}
+```
+
+### ✅ Como é agora (com a Jorm)
+Escreve apenas a estrutura da sua base de dados num ficheiro declarativo simples e elegante:
+
+```jorm
+model User {
+    id    Int    @id @autoincrement
+    email String @unique
+    name  String
+}
+```
+
+**O resultado?** A Jorm lê este ficheiro e gera automaticamente um **Record** do Java 21 (100% imutável) e um cliente de base de dados que faz o mapeamento manualmente. Sem anotações (`@Entity`, `@Column`), sem *reflection*, com máxima performance e tipagem estática pura!
 
 ---
 
