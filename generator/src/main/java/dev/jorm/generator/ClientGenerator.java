@@ -6,7 +6,7 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import dev.jorm.parser.SchemaModel;
+import dev.jorm.core.model.SchemaModel;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
