@@ -576,6 +576,11 @@ public class ClientGenerator {
         return sourceEntity.substring(0, 1).toLowerCase() + sourceEntity.substring(1) + "Id";
     }
 
+    private boolean isNativeType(String type) {
+        return type.equals("String") || type.equals("Int") || type.equals("Float") 
+                || type.equals("Boolean") || type.equals("DateTime");
+    }
+
     private TypeSpec generateDataBuilder(SchemaModel.EntityModel entityModel) {
         TypeSpec.Builder builder = TypeSpec.classBuilder("DataBuilder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
