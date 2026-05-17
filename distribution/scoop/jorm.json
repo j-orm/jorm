@@ -9,7 +9,7 @@
         ]
     },
     "url": "https://github.com/j-orm/jorm/releases/download/v0.1.2/jorm-cli-standalone.jar#/jorm.jar",
-    "hash": "c00f7b76a666e8550130d2d31215fc4b190f898394e33d26210f91abf3d53205",
+    "hash": "f1d505eb69c603b2cfccbf146ae6717579ebe8ac4dd41c0241755909236ce84c",
     "bin": [
         [
             "jorm.jar",
