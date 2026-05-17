@@ -1,5 +1,6 @@
 package dev.jorm.parser;
 
+import dev.jorm.core.model.SchemaModel;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.jupiter.api.Test;
