@@ -62,23 +62,31 @@ O fluxo de trabalho com o Jorm é projetado para ser intuitivo e eficiente:
 
 ### 4.1. Instalação
 
-O Jorm CLI pode ser instalado de várias maneiras, dependendo do sistema operativo e das preferências do desenvolvedor:
+A Jorm disponibiliza um executável (`jorm`) para criar os schemas e gerar o código/SQL. Pode instalar a Jorm utilizando o seu gestor de pacotes preferido:
 
+#### macOS / Linux (Homebrew)
 ```bash
-# Mac e Linux
+brew tap seu-user/jorm
 brew install jorm
-
-# Windows
-scoop install jorm
-
-# Desenvolvedores Java com SDKMAN
-sdk install jorm
-
-# Instalação Universal
-curl -sSL https://jorm.dev/install.sh | sh
 ```
 
-*(Nota: Como o Jorm ainda está em desenvolvimento inicial, pode testar o executável localmente fazendo clone do repositório, executando `mvn clean package` e usando o ficheiro `cli/target/jorm-cli-standalone.jar` gerado.)*
+#### Windows (Scoop)
+```powershell
+scoop bucket add jorm https://github.com/seu-user/jorm
+scoop install jorm
+```
+
+#### SDKMAN! (Desenvolvedores Java)
+```bash
+sdk install jorm
+```
+
+#### Instalação Universal (macOS / Linux)
+```bash
+curl -sSL https://raw.githubusercontent.com/seu-user/jorm/master/install.sh | bash
+```
+
+> **Pré-requisito:** Certifique-se de que tem o **Java 21** instalado no seu sistema, pois o Jorm é executado nativamente sobre a JVM.
 
 ### 4.2. Inicialização do Projeto
 

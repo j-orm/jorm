@@ -1,8 +1,8 @@
 class Jorm < Formula
-  desc "A Schema-First Modern ORM for Java"
-  homepage "https://jorm.dev"
-  url "https://github.com/SEU_USUARIO/jorm/releases/download/v0.1.0/jorm-cli-standalone.jar"
-  sha256 "COLOQUE_AQUI_O_SHA256_DO_JAR"
+  desc "Jorm CLI - A modern, reflection-free Java ORM"
+  homepage "https://github.com/seu-user/jorm"
+  url "https://github.com/seu-user/jorm/releases/download/v0.1.0/jorm-cli-standalone.jar"
+  sha256 "UPDATE_WITH_ACTUAL_SHA256_ON_RELEASE"
   license "MIT"
 
   depends_on "openjdk@21"
@@ -13,6 +13,6 @@ class Jorm < Formula
   end
 
   test do
-    system "#{bin}/jorm", "--version"
+    system "#{bin}/jorm", "--help"
   end
 end
