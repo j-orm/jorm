@@ -1,6 +1,6 @@
 # Passo 2: A Sintaxe do Schema ✍️
 
-A Jorm utiliza uma linguagem declarativa própria, muito inspirada no Prisma, que serve como fonte de verdade para a base de dados e para as classes Java.
+A Jorm utiliza uma linguagem declarativa própria, que serve como fonte de verdade para a base de dados e para as classes Java.
 
 Abra o ficheiro `.jorm/schema.jorm` e vamos explorar os conceitos fundamentais.
 
