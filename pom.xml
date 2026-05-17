@@ -30,7 +30,7 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/seu-user/jorm.git</connection>
+        <connection>scm:git:git://github.com/j-orm/jorm.git</connection>
         <developerConnection>scm:git:ssh://github.com:j-orm/jorm.git</developerConnection>
         <url>http://github.com/j-orm/jorm/tree/main</url>
     </scm>

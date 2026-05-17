@@ -66,13 +66,13 @@ A Jorm disponibiliza um executável (`jorm`) para criar os schemas e gerar o có
 
 #### macOS / Linux (Homebrew)
 ```bash
-brew tap seu-user/jorm
+brew tap j-orm/jorm
 brew install jorm
 ```
 
 #### Windows (Scoop)
 ```powershell
-scoop bucket add jorm https://github.com/seu-user/jorm
+scoop bucket add jorm https://github.com/j-orm/jorm
 scoop install jorm
 ```
 
@@ -83,7 +83,7 @@ sdk install jorm
 
 #### Instalação Universal (macOS / Linux)
 ```bash
-curl -sSL https://raw.githubusercontent.com/seu-user/jorm/master/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
 ```
 
 > **Pré-requisito:** Certifique-se de que tem o **Java 21** instalado no seu sistema, pois o Jorm é executado nativamente sobre a JVM.

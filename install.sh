@@ -6,12 +6,12 @@ set -e
 # Compatible with macOS and Linux
 
 # Fetch latest version from GitHub API if not hardcoded
-JORM_VERSION=$(curl -s "https://api.github.com/repos/seu-user/jorm/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+JORM_VERSION=$(curl -s "https://api.github.com/repos/j-orm/jorm/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
 if [ -z "$JORM_VERSION" ]; then
     JORM_VERSION="0.1.0"
 fi
 
-DOWNLOAD_URL="https://github.com/seu-user/jorm/releases/download/v${JORM_VERSION}/jorm-cli-standalone.jar"
+DOWNLOAD_URL="https://github.com/j-orm/jorm/releases/download/v${JORM_VERSION}/jorm-cli-standalone.jar"
 
 JORM_DIR="$HOME/.jorm"
 BIN_DIR="$JORM_DIR/bin"
