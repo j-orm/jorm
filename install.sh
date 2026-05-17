@@ -24,7 +24,7 @@ mkdir -p "$BIN_DIR"
 echo "Downloading $DOWNLOAD_URL ..."
 curl -sSL -f -o "$BIN_DIR/jorm.jar" "$DOWNLOAD_URL"
 
-# Create the 'jorm' wrapper script
+# Create the 'jorm' wrapper script for Bash
 cat << 'EOF' > "$BIN_DIR/jorm"
 #!/usr/bin/env bash
 java -jar "$HOME/.jorm/bin/jorm.jar" "$@"
@@ -32,11 +32,21 @@ EOF
 
 chmod +x "$BIN_DIR/jorm"
 
+# Create the 'jorm.cmd' wrapper script for Windows (Command Prompt / PowerShell)
+cat << 'EOF' > "$BIN_DIR/jorm.cmd"
+@echo off
+java -jar "%~dp0jorm.jar" %*
+EOF
+
 echo ""
 echo "Jorm successfully installed to $BIN_DIR/jorm"
 echo ""
-echo "To get started, add the Jorm bin directory to your PATH:"
+echo "To get started, add the Jorm bin directory to your PATH."
+echo "On macOS/Linux (Bash/Zsh):"
 echo "  export PATH=\"\$HOME/.jorm/bin:\$PATH\""
+echo ""
+echo "On Windows (PowerShell):"
+echo "  \$env:PATH += \";\$HOME\.jorm\bin\""
 echo ""
 echo "Then run:"
 echo "  jorm init"
