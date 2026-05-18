@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>dev.jorm</groupId>
+        <groupId>pt.jorm</groupId>
         <artifactId>jorm-parent</artifactId>
         <version>0.1.0</version>
     </parent>
@@ -12,7 +12,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>dev.jorm</groupId>
+            <groupId>pt.jorm</groupId>
             <artifactId>jorm-core</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -50,8 +50,9 @@
                         <configuration>
                             <visitor>true</visitor>
                             <listener>true</listener>
-                            <sourceDirectory>${project.basedir}/src/main/antlr4</sourceDirectory>
-                            <outputDirectory>${project.build.directory}/generated-sources/antlr4</outputDirectory>
+                            <includes>
+                                <include>**/*.g4</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>

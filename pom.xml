@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.jorm</groupId>
+    <groupId>pt.jorm</groupId>
     <artifactId>jorm-parent</artifactId>
     <version>0.1.0</version>
     <packaging>pom</packaging>
@@ -25,7 +25,7 @@
         <developer>
             <id>jorm-team</id>
             <name>Jorm Team</name>
-            <email>suport@jorm.dev</email>
+            <email>suport@jorm.pt</email>
         </developer>
     </developers>
 
