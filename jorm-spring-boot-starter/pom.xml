@@ -10,6 +10,9 @@
     </parent>
 
     <artifactId>jorm-spring-boot-starter</artifactId>
+    <name>Jorm Spring Boot Starter</name>
+    <description>Spring Boot Auto-configuration for Jorm ORM</description>
+    <url>https://github.com/j-orm/jorm</url>
 
     <properties>
         <spring-boot.version>3.2.3</spring-boot.version>

@@ -9,6 +9,9 @@
         <version>0.1.0</version>
     </parent>
     <artifactId>jorm-cli</artifactId>
+    <name>Jorm CLI</name>
+    <description>Command Line Interface for Jorm ORM</description>
+    <url>https://github.com/j-orm/jorm</url>
 
     <dependencies>
         <dependency>

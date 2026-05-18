@@ -9,6 +9,9 @@
         <version>0.1.0</version>
     </parent>
     <artifactId>jorm-generator</artifactId>
+    <name>Jorm Generator</name>
+    <description>Code Generator for Jorm ORM</description>
+    <url>https://github.com/j-orm/jorm</url>
 
     <dependencies>
         <!-- Dependency to the parser module -->

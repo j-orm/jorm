@@ -9,4 +9,7 @@
         <version>0.1.0</version>
     </parent>
     <artifactId>jorm-client</artifactId>
+    <name>Jorm Client</name>
+    <description>Database Client Runtime for Jorm ORM</description>
+    <url>https://github.com/j-orm/jorm</url>
 </project>

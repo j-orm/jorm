@@ -9,6 +9,9 @@
         <version>0.1.0</version>
     </parent>
     <artifactId>jorm-db</artifactId>
+    <name>Jorm DB</name>
+    <description>Database adapters and query builders for Jorm ORM</description>
+    <url>https://github.com/j-orm/jorm</url>
     <dependencies>
         <!-- H2 Database para testes e MVP em memória -->
         <dependency>
