@@ -1,10 +1,10 @@
-# Passo 1: Instalação e Inicialização 🚀
+# Step 1: Installation and Initialization 🚀
 
-Bem-vindo à documentação oficial da Jorm! Este guia vai ajudar a preparar o seu ambiente para utilizar o ORM mais rápido e moderno do ecossistema Java.
+Welcome to the official Jorm documentation! This guide will help you prepare your environment to use the fastest and most modern ORM in the Java ecosystem.
 
-## 1. Instalar a CLI da Jorm
+## 1. Install the Jorm CLI
 
-A CLI da Jorm é a ferramenta principal para gerar código e gerir a sua base de dados. Escolha o método mais adequado ao seu sistema operativo.
+The Jorm CLI is the main tool for generating code and managing your database. Choose the method best suited for your operating system.
 
 ### macOS / Linux (Homebrew)
 ```bash
@@ -18,73 +18,73 @@ scoop bucket add jorm https://github.com/j-orm/jorm
 scoop install jorm
 ```
 
-### Programadores Java (SDKMAN!)
+### Java Developers (SDKMAN!)
 ```bash
 sdk install jorm
 ```
 
-### Instalação Universal
+### Universal Installation
 
-**No macOS ou Linux (Bash/Zsh):**
-Se não usar nenhum gestor de pacotes, pode instalar a CLI diretamente usando o nosso script oficial:
+**On macOS or Linux (Bash/Zsh):**
+If you don't use any package manager, you can install the CLI directly using our official script:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
 ```
 
-**No Windows (PowerShell):**
-Para os programadores Windows que prefiram não usar o Scoop, disponibilizamos um script nativo:
+**On Windows (PowerShell):**
+For Windows developers who prefer not to use Scoop, we provide a native script:
 
 ```powershell
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
-**No Windows (Command Prompt / CMD):**
-Se estiver a usar o CMD clássico, pode delegar a execução ao PowerShell com este comando:
+**On Windows (Command Prompt / CMD):**
+If you are using the classic CMD, you can delegate the execution to PowerShell with this command:
 
 ```cmd
 powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
-### ⚙️ Configurar o PATH
+### ⚙️ Configure PATH
 
-Após a **Instalação Universal**, é necessário garantir que o terminal sabe onde encontrar o executável da Jorm. Se instalou via Homebrew ou Scoop, pode saltar este passo.
+After the **Universal Installation**, you need to ensure that the terminal knows where to find the Jorm executable. If you installed via Homebrew or Scoop, you can skip this step.
 
-Escolha o comando de acordo com o terminal que está a utilizar:
+Choose the command according to the terminal you are using:
 
-#### No macOS ou Linux (Bash/Zsh)
-Adicione esta linha ao seu ficheiro `.bashrc` ou `.zshrc` para que a alteração seja permanente:
+#### On macOS or Linux (Bash/Zsh)
+Add this line to your `.bashrc` or `.zshrc` file to make the change permanent:
 ```bash
 export PATH="$HOME/.jorm/bin:$PATH"
 ```
 
-#### No Windows (PowerShell)
-Para adicionar ao PATH na sessão atual:
+#### On Windows (PowerShell)
+To add to the PATH in the current session:
 ```powershell
 $env:PATH += ";$HOME\.jorm\bin"
 ```
 
-#### No Windows (Command Prompt / CMD)
-Para adicionar ao PATH na sessão atual:
+#### On Windows (Command Prompt / CMD)
+To add to the PATH in the current session:
 ```cmd
 set PATH=%PATH%;%USERPROFILE%\.jorm\bin
 ```
 
-> 💡 **Nota para Windows:** Para tornar a alteração permanente no Windows, pode pesquisar por "Editar as variáveis de ambiente do sistema" no menu Iniciar e adicionar o caminho `C:\Users\OSeuUtilizador\.jorm\bin` à variável `Path`.
+> 💡 **Note for Windows:** To make the change permanent in Windows, you can search for "Edit the system environment variables" in the Start menu and add the path `C:\Users\YourUser\.jorm\bin` to the `Path` variable.
 
-> **Atenção:** É estritamente necessário ter o **Java 21** instalado no sistema.
+> **Attention:** It is strictly required to have **Java 21** installed on your system.
 
-## 2. Iniciar um Novo Projeto
+## 2. Start a New Project
 
-Navegue até à raiz do seu projeto Java e execute o comando de inicialização.
+Navigate to the root of your Java project and run the initialization command.
 
 ```bash
-cd o-meu-projeto-java
+cd my-java-project
 jorm init
 ```
 
-Este comando cria automaticamente uma pasta oculta chamada `.jorm` com um ficheiro de exemplo `schema.jorm`. Este ficheiro é o "coração" da sua base de dados e do código Java que será gerado.
+This command automatically creates a hidden folder named `.jorm` with an example `schema.jorm` file. This file is the "heart" of your database and the Java code that will be generated.
 
-## 3. Próximos Passos
+## 3. Next Steps
 
-Agora que a Jorm está instalada, avance para o **Passo 2** para aprender a escrever o seu primeiro schema.
+Now that Jorm is installed, proceed to **Step 2** to learn how to write your first schema.

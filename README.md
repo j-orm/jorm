@@ -1,6 +1,6 @@
 <div align="center">
   <h1>🚀 Jorm</h1>
-  <p><strong>O ORM Moderno, Schema-First e sem Reflection para o Ecossistema Java</strong></p>
+  <p><strong>The Modern, Schema-First, and Reflection-Free ORM for the Java Ecosystem</strong></p>
   
   [![Status](https://img.shields.io/badge/status-BETA-orange.svg)]()
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,20 +9,20 @@
 
 <br/>
 
-> ⚠️ **Aviso:** A Jorm encontra-se atualmente em fase **BETA**. O projeto já é funcional, mas a API pode sofrer alterações. Agradecemos o seu feedback e contribuições!
+> ⚠️ **Warning:** Jorm is currently in **BETA**. The project is functional, but the API may undergo changes. We appreciate your feedback and contributions!
 
-O ecossistema Java precisava de uma lufada de ar fresco na interação com bases de dados. Inspirado na simplicidade do Prisma (no mundo TypeScript), a **Jorm** é um ORM desenhado para a era do Java 21 e do GraalVM. 
+The Java ecosystem needed a breath of fresh air when interacting with databases. Inspired by the simplicity of Prisma (in the TypeScript world), **Jorm** is an ORM designed for the era of Java 21 and GraalVM. 
 
 ---
 
-## 💡 O Que a Jorm Vem Resolver?
+## 💡 What Does Jorm Solve?
 
-Durante décadas, o ecossistema Java confiou em ORMs pesados (como o Hibernate ou JPA) que exigem dezenas de anotações, classes mutáveis e dependem fortemente de *reflection*. Isso resulta em tempos de arranque lentos, uso excessivo de memória e dificuldade em compilar nativamente para GraalVM.
+For decades, the Java ecosystem has relied on heavy ORMs (like Hibernate or JPA) that require dozens of annotations, mutable classes, and rely heavily on *reflection*. This results in slow startup times, excessive memory usage, and difficulty compiling natively for GraalVM.
 
-A Jorm resolve este problema mudando completamente o paradigma: **Schema-First e geração de código nativo.**
+Jorm solves this problem by completely shifting the paradigm: **Schema-First and native code generation.**
 
-### ❌ Como era antes (JPA / Hibernate)
-Para criar uma simples tabela de utilizadores, o código ficava poluído com anotações e código repetitivo (*boilerplate*):
+### ❌ How it used to be (JPA / Hibernate)
+To create a simple users table, the code was polluted with annotations and boilerplate:
 
 ```java
 @Entity
@@ -38,12 +38,12 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    // + Getters, Setters, Construtores vazios, equals() e hashCode() ...
+    // + Getters, Setters, Empty Constructors, equals() and hashCode() ...
 }
 ```
 
-### ✅ Como é agora (com a Jorm)
-Escreve apenas a estrutura da sua base de dados num ficheiro declarativo simples e elegante:
+### ✅ How it is now (with Jorm)
+Just write the structure of your database in a simple and elegant declarative file:
 
 ```jorm
 model User {
@@ -53,58 +53,58 @@ model User {
 }
 ```
 
-**O resultado?** A Jorm lê este ficheiro e gera automaticamente um **Record** do Java 21 (100% imutável) e um cliente de base de dados que faz o mapeamento manualmente. Sem anotações (`@Entity`, `@Column`), sem *reflection*, com máxima performance e tipagem estática pura!
+**The result?** Jorm reads this file and automatically generates a Java 21 **Record** (100% immutable) and a database client that maps the data manually. No annotations (`@Entity`, `@Column`), no *reflection*, with maximum performance and pure static typing!
 
 ---
 
-## 🔄 Como Funcionam as Migrações?
+## 🔄 How Do Migrations Work?
 
-Em vez de escrever scripts SQL complexos manualmente ou usar ferramentas externas (como o Flyway ou Liquibase), a Jorm cuida de todo o ciclo de vida da sua base de dados.
+Instead of writing complex SQL scripts manually or using external tools (like Flyway or Liquibase), Jorm handles the entire lifecycle of your database.
 
-Quando executa o comando de desenvolvimento:
+When you run the development command:
 
 ```bash
 jorm migrate dev
 ```
 
-A Jorm executa o seguinte fluxo automaticamente de forma transparente:
-1. **Lê** o ficheiro `schema.jorm`.
-2. **Compara** o seu modelo com o estado atual da base de dados (usando JDBC metadata).
-3. **Gera** o SQL necessário de forma automática (`CREATE TABLE`, `ALTER TABLE`, etc.).
-4. **Aplica** as alterações de imediato na base de dados conectada.
-5. **Guarda** o histórico num ficheiro local (exemplo: `migrations/001_add_user_table.sql`) para controlo de versão e futura implementação em produção.
+Jorm executes the following flow automatically and transparently:
+1. **Reads** the `schema.jorm` file.
+2. **Compares** your model with the current database state (using JDBC metadata).
+3. **Generates** the necessary SQL automatically (`CREATE TABLE`, `ALTER TABLE`, etc.).
+4. **Applies** the changes immediately to the connected database.
+5. **Saves** the history in a local file (example: `migrations/001_add_user_table.sql`) for version control and future deployment to production.
 
 ---
 
-## ✨ Funcionalidades Atuais
+## ✨ Current Features
 
-A versão BETA já inclui os pilares fundamentais para começar a desenvolver:
+The BETA version already includes the foundational pillars to start developing:
 
-* 📝 **Schema-First:** Um ficheiro `.jorm` como fonte única da verdade.
-* ⚡ **Zero Reflection:** Cliente gerado com `JavaPoet` e mapeamento manual transparente. Perfeito para compilação nativa com GraalVM.
-* 📦 **Records do Java 21:** Todos os modelos gerados utilizam a funcionalidade nativa de `Records` para imutabilidade e concisão.
-* 🗄️ **Suporte a Múltiplos Dialetos:** Integração pronta a usar com **PostgreSQL** e **MySQL**.
-* 🛠️ **CLI Poderosa:** Comandos para inicializar, gerar código e correr migrações de forma autónoma.
-* 🌱 **Spring Boot Starter:** Configuração automática e injeção de dependências para projetos Spring.
-* 🔍 **Fluent API:** Consultas intuitivas com autocomplete na sua IDE, sem necessidade de escrever SQL ou JPQL manualmente.
-
----
-
-## 🔮 O Que Aí Vem (Roadmap)
-
-Temos planos ambiciosos para tornar a Jorm no ORM de referência. Eis as funcionalidades planeadas para as próximas versões:
-
-* 🔄 **Relações Complexas:** Suporte completo e bidirecional para relações One-to-One, One-to-Many e Many-to-Many.
-* 🍃 **Suporte Quarkus & Micronaut:** Starters nativos para frameworks reativos.
-* 📊 **Jorm Studio:** Uma interface gráfica no browser para visualizar e editar os dados diretamente a partir do ficheiro de schema.
-* 🐘 **MongoDB / NoSQL:** Extensão do parser para suportar bases de dados não relacionais.
-* 🚀 **Migrações Avançadas:** Diffs automáticos de schema para gerar scripts SQL de *rollback* precisos.
+* 📝 **Schema-First:** A `.jorm` file as the single source of truth.
+* ⚡ **Zero Reflection:** Client generated with `JavaPoet` and transparent manual mapping. Perfect for native compilation with GraalVM.
+* 📦 **Java 21 Records:** All generated models use the native `Records` feature for immutability and conciseness.
+* 🗄️ **Multi-Dialect Support:** Out-of-the-box integration with **PostgreSQL** and **MySQL**.
+* 🛠️ **Powerful CLI:** Commands to initialize, generate code, and run migrations autonomously.
+* 🌱 **Spring Boot Starter:** Automatic configuration and dependency injection for Spring projects.
+* 🔍 **Fluent API:** Intuitive queries with autocomplete in your IDE, no need to write manual SQL or JPQL.
 
 ---
 
-## 🚀 Instalação Rápida
+## 🔮 What's Next (Roadmap)
 
-Pode instalar a CLI da Jorm utilizando o seu gestor de pacotes preferido:
+We have ambitious plans to make Jorm the go-to ORM. Here are the features planned for upcoming versions:
+
+* 🔄 **Complex Relations:** Full bidirectional support for One-to-One, One-to-Many, and Many-to-Many relationships.
+* 🍃 **Quarkus & Micronaut Support:** Native starters for reactive frameworks.
+* 📊 **Jorm Studio:** A graphical browser interface to view and edit data directly from the schema file.
+* 🐘 **MongoDB / NoSQL:** Parser extension to support non-relational databases.
+* 🚀 **Advanced Migrations:** Automatic schema diffs to generate precise rollback SQL scripts.
+
+---
+
+## 🚀 Quick Installation
+
+You can install the Jorm CLI using your preferred package manager:
 
 **macOS / Linux (Homebrew)**
 ```bash
@@ -118,68 +118,66 @@ scoop bucket add jorm https://github.com/j-orm/jorm
 scoop install jorm
 ```
 
-**Instalação Universal**
+**Universal Installation**
 
-**No macOS ou Linux (Bash/Zsh):**
+**On macOS or Linux (Bash/Zsh):**
 ```bash
 curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
 ```
 
-**No Windows (PowerShell):**
+**On Windows (PowerShell):**
 ```powershell
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
-**No Windows (Command Prompt / CMD):**
+**On Windows (Command Prompt / CMD):**
 ```cmd
 powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
-### ⚙️ Configurar o PATH
+### ⚙️ Configure PATH
 
-Se utilizou a **Instalação Universal**, precisa de adicionar a pasta da Jorm às variáveis de ambiente do seu sistema para que o comando `jorm` seja reconhecido em qualquer terminal.
+If you used the **Universal Installation**, you need to add the Jorm folder to your system's environment variables so the `jorm` command is recognized in any terminal.
 
-**No macOS ou Linux (Bash/Zsh):**
+**On macOS or Linux (Bash/Zsh):**
 ```bash
 export PATH="$HOME/.jorm/bin:$PATH"
 ```
 
-**No Windows (PowerShell):**
+**On Windows (PowerShell):**
 ```powershell
 $env:PATH += ";$HOME\.jorm\bin"
 ```
 
-**No Windows (Command Prompt / CMD):**
+**On Windows (Command Prompt / CMD):**
 ```cmd
 set PATH=%PATH%;%USERPROFILE%\.jorm\bin
 ```
 
-> 💡 **Dica:** Os gestores de pacotes como o **Homebrew** e o **Scoop** já tratam desta configuração automaticamente para si!
+> 💡 **Tip:** Package managers like **Homebrew** and **Scoop** already handle this configuration automatically for you!
 
 ---
 
-## 📚 Documentação Completa
+## 📚 Comprehensive Documentation
 
-Preparámos um guia passo a passo detalhado na pasta `docs/` para o ajudar a tirar o máximo partido da Jorm. Explore os capítulos:
+We have prepared a detailed step-by-step guide in the `docs/` folder to help you get the most out of Jorm. Explore the chapters:
 
-1. [Instalação e Inicialização](docs/01-instalacao.md)
-2. [A Sintaxe do Schema](docs/02-sintaxe-do-schema.md)
-3. [Comandos CLI e Migrações](docs/03-comandos-cli.md)
-4. [Integração com Spring Boot](docs/04-integracao-spring-boot.md)
-
-*(Para informações sobre como configurar o ambiente de desenvolvimento e compilar o próprio repositório da Jorm, consulte o ficheiro [DEVELOPMENT.md](DEVELOPMENT.md))*
+1. [Installation and Initialization](docs/01-instalacao.md)
+2. [Schema Syntax](docs/02-sintaxe-do-schema.md)
+3. [CLI Commands and Migrations](docs/03-comandos-cli.md)
+4. [Spring Boot Integration](docs/04-integracao-spring-boot.md)
 
 ---
 
-## 🤝 Como Contribuir
+## 🤝 How to Contribute
 
-Sendo um projeto de código aberto, toda a ajuda é bem-vinda! Se encontrou um erro, tem uma ideia para uma funcionalidade ou quer corrigir documentação:
+Being an open-source project, all help is welcome! If you found a bug, have an idea for a feature, or want to fix documentation:
 
-1. Faça um Fork do repositório.
-2. Crie uma branch com a sua funcionalidade (`git checkout -b feature/a-minha-ideia`).
-3. Siga a convenção de **Commits Semânticos** (ex: `feat: add support for uuid types`).
-4. Abra um Pull Request.
+1. Fork the repository.
+2. Create a branch for your feature (`git checkout -b feature/my-idea`).
+3. Follow the **Semantic Commits** convention (e.g., `feat: add support for uuid types`).
+4. Open a Pull Request.
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está licenciado sob a licença **MIT**. Veja o ficheiro [LICENSE](LICENSE) para mais detalhes.
+This project is licensed under the **MIT** license. See the [LICENSE](LICENSE) file for more details.

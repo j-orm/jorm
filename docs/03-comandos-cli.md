@@ -1,22 +1,22 @@
-A Jorm CLI fornece todos os comandos necessários para sincronizar o teu `schema.jorm` com o código Java e com a base de dados. Neste guia vais aprender cada comando em detalhe.
+The Jorm CLI provides all the necessary commands to synchronize your `schema.jorm` with the Java code and the database. In this guide, you will learn about each command in detail.
 
 ---
 
-## 1. Gerar Código Java
+## 1. Generating Java Code
 
-Sempre que alterares o ficheiro `schema.jorm`, tens de regenerar o cliente Java:
+Whenever you change the `schema.jorm` file, you must regenerate the Java client:
 
 ```bash
 jorm generate
 ```
 
-Este comando lê o teu schema e cria os seguintes ficheiros na pasta definida em `output` (por padrão `src/main/java/generated`):
+This command reads your schema and creates the following files in the folder defined in `output` (by default `src/main/java/generated`):
 
-- **Records Java 21** para cada `model` definido (ex: `User.java`, `Post.java`)
-- **Enums Java** para cada `enum` definido (ex: `Role.java`)
-- **Classe `Jorm.java`:** o cliente principal com a Fluent API para realizar consultas
+- **Java 21 Records** for each defined `model` (e.g., `User.java`, `Post.java`)
+- **Java Enums** for each defined `enum` (e.g., `Role.java`)
+- **`Jorm.java` Class:** the main client with the Fluent API to perform queries
 
-Exemplo de Record gerado para o modelo `User`:
+Example of a generated Record for the `User` model:
 
 ```java
 public record User(
@@ -31,99 +31,98 @@ public record User(
 
 ---
 
-## 2. Migrações de Base de Dados
+## 2. Database Migrations
 
-As migrações traduzem os teus modelos para SQL real e sincronizam a base de dados. Todos os comandos de migração utilizam a variável de ambiente `DATABASE_URL` para se conectar.
+Migrations translate your models into actual SQL and synchronize the database. All migration commands use the `DATABASE_URL` environment variable to connect.
 
-### Configurar a DATABASE_URL
+### Configuring DATABASE_URL
 
-Define a variável de ambiente antes de executar qualquer comando de migração:
+Set the environment variable before running any migration command:
 
 **PostgreSQL:**
 
 ```bash
-export DATABASE_URL="postgresql://utilizador:senha@localhost:5432/nome_da_base"
+export DATABASE_URL="postgresql://user:password@localhost:5432/database_name"
 ```
 
 **MySQL:**
 
 ```bash
-export DATABASE_URL="mysql://utilizador:senha@localhost:3306/nome_da_base"
+export DATABASE_URL="mysql://user:password@localhost:3306/database_name"
 ```
 
 ---
 
-### 2.1. Migração em Desenvolvimento
+### 2.1. Development Migration
 
-Para criar o script SQL e aplicá-lo imediatamente à base de dados:
+To create the SQL script and apply it immediately to the database:
 
 ```bash
 jorm migrate dev
 ```
 
-O que este comando faz:
+What this command does:
 
-1. Lê o `schema.jorm`
-2. Compara com o estado atual da base de dados via JDBC metadata
-3. Gera o SQL necessário (`CREATE TABLE`, `ALTER TABLE`, etc.)
-4. Aplica as alterações na base de dados
-5. Guarda o ficheiro SQL em `.jorm/migrations/` com a data atual (ex: `001_20240518_add_user_table.sql`)
+1. Reads `schema.jorm`
+2. Compares it with the current database state via JDBC metadata
+3. Generates the necessary SQL (`CREATE TABLE`, `ALTER TABLE`, etc.)
+4. Applies the changes to the database
+5. Saves the SQL file in `.jorm/migrations/` with the current date (e.g., `001_20240518_add_user_table.sql`)
 
 ---
 
-### 2.2. Ver o Estado das Migrações
+### 2.2. Checking Migration Status
 
-Para ver quais as migrações já aplicadas e quais as que estão pendentes:
+To see which migrations have been applied and which are pending:
 
 ```bash
 jorm migrate status
 ```
 
-O output indica:
+The output indicates:
 
-- As migrações já aplicadas (marcadas como `applied`)
-- As migrações pendentes (marcadas como `pending`)
+- Applied migrations (marked as `applied`)
+- Pending migrations (marked as `pending`)
 
 ---
 
-### 2.3. Aplicar em Produção
+### 2.3. Applying in Production
 
-Num ambiente de produção, onde os ficheiros `.sql` já foram gerados noutra máquina ou pipeline de CI/CD, usa este comando para aplicar apenas as migrações pendentes:
+In a production environment, where `.sql` files have already been generated on another machine or CI/CD pipeline, use this command to apply only the pending migrations:
 
 ```bash
 jorm migrate deploy
 ```
 
-Este comando nunca gera SQL novo. Apenas aplica os ficheiros `.sql` que ainda não foram executados.
+This command never generates new SQL. It only applies the `.sql` files that haven't been executed yet.
 
 ---
 
-### 2.4. Limpar a Base de Dados (só para desenvolvimento)
+### 2.4. Resetting the Database (Development Only)
 
-Para apagar todas as tabelas e começar do zero:
+To drop all tables and start from scratch:
 
 ```bash
 jorm migrate reset
 ```
 
-> **Aviso:** Este comando é destrutivo e apaga todos os dados. Use apenas em ambientes de desenvolvimento.
-> 
+> **Warning:** This command is destructive and deletes all data. Use it only in development environments.
 
 ---
 
-## 3. Resumo dos Comandos
+## 3. Commands Summary
 
-| Comando | Descrição |
+| Command | Description |
 | --- | --- |
-| `jorm init` | Inicializa um novo projeto Jorm na pasta atual |
-| `jorm generate` | Gera os Records e o cliente Java a partir do schema |
-| `jorm migrate dev` | Gera SQL e aplica migrações (ambiente de desenvolvimento) |
-| `jorm migrate status` | Mostra o estado de cada migração (aplicada / pendente) |
-| `jorm migrate deploy` | Aplica apenas migrações pendentes (ambiente de produção) |
-| `jorm migrate reset` | Apaga todas as tabelas e dados (apenas desenvolvimento) |
+| `jorm init` | Initializes a new Jorm project in the current folder |
+| `jorm generate` | Generates the Records and the Java client from the schema |
+| `jorm migrate dev` | Generates SQL and applies migrations (development environment) |
+| `jorm migrate status` | Shows the status of each migration (applied / pending) |
+| `jorm migrate deploy` | Applies only pending migrations (production environment) |
+| `jorm migrate reset` | Drops all tables and data (development only) |
 
 ---
 
-## Próximos Passos
+## Next Steps
 
-Com o código gerado e a base de dados pronta, avança para o **Passo 4** se utilizas o Spring Boot.
+With the code generated and the database ready, proceed to **Step 4** if you are using Spring Boot.

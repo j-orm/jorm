@@ -1,14 +1,12 @@
+# Step 4: Spring Boot Integration
 
-Passo 4: Integração com Spring Boot
-
-
-A Jorm foi desenhada para ser independente de qualquer framework, mas integra-se de forma brilhante com o **Spring Boot**. Quando configuras `framework = "spring"` no teu `schema.jorm`, o cliente gerado inclui automaticamente a anotação `@Repository`, permitindo injeção de dependências nativa.
+Jorm was designed to be framework-agnostic, but it integrates brilliantly with **Spring Boot**. When you set `framework = "spring"` in your `schema.jorm`, the generated client automatically includes the `@Repository` annotation, allowing for native dependency injection.
 
 ---
 
-## 1. Adicionar a Dependência
+## 1. Adding the Dependency
 
-Adiciona o starter oficial da Jorm ao teu `pom.xml`:
+Add the official Jorm starter to your `pom.xml`:
 
 ```xml
 <dependency>
@@ -18,44 +16,43 @@ Adiciona o starter oficial da Jorm ao teu `pom.xml`:
 </dependency>
 ```
 
-> Verifica sempre a versão estável mais recente no repositório oficial.
-> 
+> Always check for the latest stable version in the official repository.
 
 ---
 
-## 2. Configurar o [application.properties](http://application.properties)
+## 2. Configuring application.properties
 
-O Spring Boot Starter da Jorm aproveita a configuração padrão de `DataSource` do Spring. Basta configurar a base de dados como farias normalmente.
+Jorm's Spring Boot Starter leverages Spring's default `DataSource` configuration. Simply configure the database as you normally would.
 
-[**application.properties](http://application.properties):**
+**application.properties:**
 
-```
+```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/jorm_db
 spring.datasource.username=postgres
-spring.datasource.password=a_tua_senha
+spring.datasource.password=your_password
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
-**application.yml (alternativa):**
+**application.yml (alternative):**
 
 ```yaml
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/jorm_db
     username: postgres
-    password: a_tua_senha
+    password: your_password
     driver-class-name: org.postgresql.Driver
 ```
 
 ---
 
-## 3. Injetar o Cliente Jorm
+## 3. Injecting the Jorm Client
 
-Com a anotação `@Repository` gerada automaticamente, podes injetar a classe `Jorm` nos teus serviços usando injeção por construtor (abordagem recomendada).
+With the auto-generated `@Repository` annotation, you can inject the `Jorm` class into your services using constructor injection (recommended approach).
 
 ```java
-import com.omeuprojeto.db.Jorm;
-import com.omeuprojeto.db.User;
+import com.myproject.db.Jorm;
+import com.myproject.db.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,17 +66,17 @@ public class UserService {
         this.jorm = jorm;
     }
 
-    // ... métodos
+    // ... methods
 }
 ```
 
 ---
 
-## 4. Exemplos de Consultas com a Fluent API
+## 4. Query Examples with the Fluent API
 
-O cliente gerado expe uma Fluent API que torna as consultas intuitivas e com autocomplete completo na IDE.
+The generated client exposes a Fluent API that makes queries intuitive and provides full autocomplete in the IDE.
 
-### Criar um utilizador
+### Creating a user
 
 ```java
 public User createUser(String name, String email) {
@@ -91,7 +88,7 @@ public User createUser(String name, String email) {
 }
 ```
 
-### Buscar múltiplos registos com filtro
+### Fetching multiple records with a filter
 
 ```java
 public List<User> getActiveUsers() {
@@ -101,7 +98,7 @@ public List<User> getActiveUsers() {
 }
 ```
 
-### Buscar um único registo por ID
+### Fetching a single record by ID
 
 ```java
 public User getUserById(Integer userId) {
@@ -109,7 +106,7 @@ public User getUserById(Integer userId) {
 }
 ```
 
-### Carregar um utilizador com os seus posts (eager loading)
+### Loading a user with their posts (eager loading)
 
 ```java
 public User getUserWithPosts(Integer userId) {
@@ -119,7 +116,7 @@ public User getUserWithPosts(Integer userId) {
 }
 ```
 
-### Atualizar um registo
+### Updating a record
 
 ```java
 public User deactivateUser(Integer userId) {
@@ -130,7 +127,7 @@ public User deactivateUser(Integer userId) {
 }
 ```
 
-### Apagar um registo
+### Deleting a record
 
 ```java
 public void deleteUser(Integer userId) {
@@ -142,11 +139,11 @@ public void deleteUser(Integer userId) {
 
 ---
 
-## 5. Exemplo Completo de um Service
+## 5. Complete Service Example
 
 ```java
-import com.omeuprojeto.db.Jorm;
-import com.omeuprojeto.db.User;
+import com.myproject.db.Jorm;
+import com.myproject.db.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -190,6 +187,6 @@ public class UserService {
 
 ---
 
-## Parabéns! 🎉
+## Congratulations! 🎉
 
-Concluíste o guia completo da Jorm. Tens agora uma aplicação Java limpa, sem o peso da reflection, com tipagem estática do início ao fim e integrada nativamente com o Spring Boot.
+You have completed the full Jorm guide. You now have a clean Java application, without the overhead of reflection, with static typing from start to finish, and natively integrated with Spring Boot.
