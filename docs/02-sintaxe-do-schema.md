@@ -1,27 +1,38 @@
 # Passo 2: A Sintaxe do Schema ✍️
 
-A Jorm utiliza uma linguagem declarativa própria, que serve como fonte de verdade para a base de dados e para as classes Java.
+A Jorm utiliza uma linguagem declarativa própria (ficheiros `.jorm`) que serve como **fonte única de verdade** para a base de dados e para as classes Java geradas. Neste guia vais aprender todos os conceitos necessários para escrever schemas completos.
 
-Abra o ficheiro `.jorm/schema.jorm` e vamos explorar os conceitos fundamentais.
+Abre o ficheiro `.jorm/schema.jorm` e vamos explorar.
+
+---
 
 ## 1. O Bloco de Configuração
 
-O bloco `config` define os detalhes da sua ligação e do código a gerar.
+O bloco `config` define as opções globais do teu projeto: qual a base de dados a usar, onde gerar o código e que framework usar.
 
-```jorm
+```
 config {
-    database = "postgresql" // Opções: postgresql, mysql
-    output = "src/main/java/generated"
-    package = "com.omeuprojeto.db"
-    framework = "spring" // Opcional: Adiciona anotações @Repository
+    database  = "postgresql"  // Ou: mysql
+    output    = "src/main/java/generated"
+    package   = "com.omeuprojeto.db"
+    framework = "spring"      // Opcional: adiciona @Repository ao cliente gerado
 }
 ```
 
+| Chave | Obrigatório | Descrição |
+| --- | --- | --- |
+| `database` | Sim | Dialeto SQL. Valores: `postgresql` ou `mysql` |
+| `output` | Sim | Caminho para a pasta onde o código será gerado |
+| `package` | Sim | Package Java dos ficheiros gerados |
+| `framework` | Não | Se `spring`, adiciona `@Repository` ao cliente |
+
+---
+
 ## 2. Definir Enums
 
-Os enumeradores são mapeados para `ENUM` no PostgreSQL ou `VARCHAR/ENUM` no MySQL e tornam-se `enum` no Java.
+Os enumeradores são mapeados para o tipo `ENUM` no PostgreSQL (ou `VARCHAR` no MySQL) e tornam-se um `enum` nativo no Java.
 
-```jorm
+```
 enum Role {
     USER
     ADMIN
@@ -29,11 +40,21 @@ enum Role {
 }
 ```
 
+O enum gerado em Java será:
+
+```java
+public enum Role {
+    USER, ADMIN, MODERATOR
+}
+```
+
+---
+
 ## 3. Definir Modelos (Tabelas)
 
-A palavra-chave `model` representa uma tabela na base de dados e um `Record` no Java.
+A palavra-chave `model` representa uma tabela na base de dados e um `Record` imutável no Java.
 
-```jorm
+```
 model User {
     id        Int      @id @autoincrement
     email     String   @unique
@@ -53,19 +74,88 @@ model Post {
 }
 ```
 
-### Tipos de Dados Suportados
-* `Int`: Mapeia para `Integer` no Java e `INTEGER` (ou `SERIAL`) no SQL.
-* `String`: Mapeia para `String` no Java e `VARCHAR(255)` no SQL.
-* `Float`: Mapeia para `Float` no Java e `DOUBLE PRECISION` no SQL.
-* `Boolean`: Mapeia para `Boolean` no Java e `BOOLEAN` no SQL.
-* `DateTime`: Mapeia para `LocalDateTime` no Java e `TIMESTAMP` no SQL.
+---
 
-### Anotações Disponíveis
-* `@id`: Define a Chave Primária.
-* `@autoincrement`: Define que a coluna é gerada automaticamente.
-* `@unique`: Adiciona a restrição `UNIQUE` à coluna.
-* `@relation`: Define chaves estrangeiras entre modelos.
+## 4. Tipos de Dados Suportados
 
-## 4. O que acontece a seguir?
+| Tipo Jorm | Tipo Java | Tipo SQL (PostgreSQL) | Tipo SQL (MySQL) |
+| --- | --- | --- | --- |
+| `Int` | `Integer` | `INTEGER` / `SERIAL` | `INT` / `AUTO_INCREMENT` |
+| `String` | `String` | `VARCHAR(255)` | `VARCHAR(255)` |
+| `Float` | `Float` | `DOUBLE PRECISION` | `DOUBLE` |
+| `Boolean` | `Boolean` | `BOOLEAN` | `TINYINT(1)` |
+| `DateTime` | `LocalDateTime` | `TIMESTAMP` | `DATETIME` |
 
-Depois de escrever o schema, está pronto para gerar o código e criar as tabelas. Avance para o **Passo 3**.
+---
+
+## 5. Anotações Disponíveis
+
+| Anotação | Aplica-se a | Descrição |
+| --- | --- | --- |
+| `@id` | Campo | Define a chave primária da tabela |
+| `@autoincrement` | Campo `Int` | A coluna é gerada automaticamente pela BD |
+| `@unique` | Campo | Adiciona a restrição `UNIQUE` à coluna |
+| `@relation(...)` | Campo de modelo | Define uma chave estrangeira entre modelos |
+
+---
+
+## 6. Relações entre Modelos
+
+As relações são definidas usando `@relation`. O campo que armazena a chave estrangeira usa `fields` e `references` para indicar qual coluna local aponta para qual coluna remota.
+
+```
+model Post {
+    id       Int    @id @autoincrement
+    authorId Int
+    author   User   @relation(fields: [authorId], references: [id])
+}
+```
+
+Neste exemplo, `authorId` é a coluna da chave estrangeira e `id` é a coluna referenciada na tabela `User`.
+
+> **Nota:** O suporte completo a relações bidirecionais e complexas faz parte do roadmap da Jorm.
+> 
+
+---
+
+## 7. Exemplo Completo de Schema
+
+Um schema real com config, enum, e dois modelos relacionados:
+
+```
+config {
+    database  = "postgresql"
+    output    = "src/main/java/generated"
+    package   = "com.meuprojeto.db"
+    framework = "spring"
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+model User {
+    id        Int      @id @autoincrement
+    email     String   @unique
+    name      String
+    role      Role
+    isActive  Boolean
+    createdAt DateTime
+    posts     [Post]   @relation(fields: [id], references: [authorId])
+}
+
+model Post {
+    id        Int    @id @autoincrement
+    title     String
+    content   String
+    authorId  Int
+    author    User   @relation(fields: [authorId], references: [id])
+}
+```
+
+---
+
+## Próximos Passos
+
+Agora que o teu schema está escrito, avança para o **Passo 3** para gerar o código Java e criar as tabelas na base de dados.

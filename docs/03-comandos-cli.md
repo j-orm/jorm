@@ -1,62 +1,129 @@
-# Passo 3: Comandos CLI e Migrações 🛠️
+A Jorm CLI fornece todos os comandos necessários para sincronizar o teu `schema.jorm` com o código Java e com a base de dados. Neste guia vais aprender cada comando em detalhe.
 
-A Jorm CLI fornece as ferramentas necessárias para sincronizar o seu `schema.jorm` com o código Java e com a base de dados.
+---
 
 ## 1. Gerar Código Java
 
-Sempre que alterar o ficheiro `schema.jorm`, deve regenerar o cliente Java.
+Sempre que alterares o ficheiro `schema.jorm`, tens de regenerar o cliente Java:
 
 ```bash
 jorm generate
 ```
 
-Este comando lê o seu schema e cria os `Records` e a classe cliente principal (`Jorm.java`) na pasta especificada na configuração (por padrão `src/main/java/generated`).
+Este comando lê o teu schema e cria os seguintes ficheiros na pasta definida em `output` (por padrão `src/main/java/generated`):
+
+- **Records Java 21** para cada `model` definido (ex: `User.java`, `Post.java`)
+- **Enums Java** para cada `enum` definido (ex: `Role.java`)
+- **Classe `Jorm.java`:** o cliente principal com a Fluent API para realizar consultas
+
+Exemplo de Record gerado para o modelo `User`:
+
+```java
+public record User(
+    Integer id,
+    String email,
+    String name,
+    Role role,
+    Boolean isActive,
+    LocalDateTime createdAt
+) {}
+```
+
+---
 
 ## 2. Migrações de Base de Dados
 
-As migrações permitem traduzir os seus modelos para código SQL real. Para testar e implementar na base de dados, a Jorm utiliza a variável de ambiente `DATABASE_URL`.
+As migrações traduzem os teus modelos para SQL real e sincronizam a base de dados. Todos os comandos de migração utilizam a variável de ambiente `DATABASE_URL` para se conectar.
 
-**Formato da DATABASE_URL:**
+### Configurar a DATABASE_URL
+
+Define a variável de ambiente antes de executar qualquer comando de migração:
+
+**PostgreSQL:**
+
 ```bash
-export DATABASE_URL="postgresql://usuario:senha@localhost:5432/nome_da_base"
-# ou
-export DATABASE_URL="mysql://usuario:senha@localhost:3306/nome_da_base"
+export DATABASE_URL="postgresql://utilizador:senha@localhost:5432/nome_da_base"
 ```
 
-### 2.1. Criar uma Migração (Modo de Desenvolvimento)
+**MySQL:**
 
-Para ler o schema, gerar o script `.sql` e aplicá-lo à sua base de dados, execute:
+```bash
+export DATABASE_URL="mysql://utilizador:senha@localhost:3306/nome_da_base"
+```
+
+---
+
+### 2.1. Migração em Desenvolvimento
+
+Para criar o script SQL e aplicá-lo imediatamente à base de dados:
 
 ```bash
 jorm migrate dev
 ```
-Os ficheiros SQL gerados são guardados na pasta `.jorm/migrations/` com a data atual.
 
-### 2.2. Verificar o Estado
+O que este comando faz:
 
-Para ver quais as migrações que já foram aplicadas e quais as que estão pendentes:
+1. Lê o `schema.jorm`
+2. Compara com o estado atual da base de dados via JDBC metadata
+3. Gera o SQL necessário (`CREATE TABLE`, `ALTER TABLE`, etc.)
+4. Aplica as alterações na base de dados
+5. Guarda o ficheiro SQL em `.jorm/migrations/` com a data atual (ex: `001_20240518_add_user_table.sql`)
+
+---
+
+### 2.2. Ver o Estado das Migrações
+
+Para ver quais as migrações já aplicadas e quais as que estão pendentes:
 
 ```bash
 jorm migrate status
 ```
 
+O output indica:
+
+- As migrações já aplicadas (marcadas como `applied`)
+- As migrações pendentes (marcadas como `pending`)
+
+---
+
 ### 2.3. Aplicar em Produção
 
-Num ambiente de produção, onde os ficheiros `.sql` já foram gerados noutra máquina ou pipeline, basta aplicar as migrações pendentes:
+Num ambiente de produção, onde os ficheiros `.sql` já foram gerados noutra máquina ou pipeline de CI/CD, usa este comando para aplicar apenas as migrações pendentes:
 
 ```bash
 jorm migrate deploy
 ```
 
-### 2.4. Limpar a Base de Dados (Apenas para Desenvolvimento)
+Este comando nunca gera SQL novo. Apenas aplica os ficheiros `.sql` que ainda não foram executados.
 
-Se precisar de limpar todas as tabelas e começar de novo:
+---
+
+### 2.4. Limpar a Base de Dados (só para desenvolvimento)
+
+Para apagar todas as tabelas e começar do zero:
 
 ```bash
 jorm migrate reset
 ```
-> **Aviso:** Este comando é destrutivo. Vai apagar todos os dados.
 
-## 3. Integração com Frameworks
+> **Aviso:** Este comando é destrutivo e apaga todos os dados. Use apenas em ambientes de desenvolvimento.
+> 
 
-Com o código gerado e a base de dados pronta, está na hora de usar a Jorm na sua aplicação. Avance para o **Passo 4** se utiliza o Spring Boot.
+---
+
+## 3. Resumo dos Comandos
+
+| Comando | Descrição |
+| --- | --- |
+| `jorm init` | Inicializa um novo projeto Jorm na pasta atual |
+| `jorm generate` | Gera os Records e o cliente Java a partir do schema |
+| `jorm migrate dev` | Gera SQL e aplica migrações (ambiente de desenvolvimento) |
+| `jorm migrate status` | Mostra o estado de cada migração (aplicada / pendente) |
+| `jorm migrate deploy` | Aplica apenas migrações pendentes (ambiente de produção) |
+| `jorm migrate reset` | Apaga todas as tabelas e dados (apenas desenvolvimento) |
+
+---
+
+## Próximos Passos
+
+Com o código gerado e a base de dados pronta, avança para o **Passo 4** se utilizas o Spring Boot.
