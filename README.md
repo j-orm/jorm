@@ -135,6 +135,27 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/inst
 powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
+### ⚙️ Configurar o PATH
+
+Se utilizou a **Instalação Universal**, precisa de adicionar a pasta da Jorm às variáveis de ambiente do seu sistema para que o comando `jorm` seja reconhecido em qualquer terminal.
+
+**No macOS ou Linux (Bash/Zsh):**
+```bash
+export PATH="$HOME/.jorm/bin:$PATH"
+```
+
+**No Windows (PowerShell):**
+```powershell
+$env:PATH += ";$HOME\.jorm\bin"
+```
+
+**No Windows (Command Prompt / CMD):**
+```cmd
+set PATH=%PATH%;%USERPROFILE%\.jorm\bin
+```
+
+> 💡 **Dica:** Os gestores de pacotes como o **Homebrew** e o **Scoop** já tratam desta configuração automaticamente para si!
+
 ---
 
 ## 📚 Documentação Completa

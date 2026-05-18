@@ -46,6 +46,32 @@ Se estiver a usar o CMD clássico, pode delegar a execução ao PowerShell com e
 powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
+### ⚙️ Configurar o PATH
+
+Após a **Instalação Universal**, é necessário garantir que o terminal sabe onde encontrar o executável da Jorm. Se instalou via Homebrew ou Scoop, pode saltar este passo.
+
+Escolha o comando de acordo com o terminal que está a utilizar:
+
+#### No macOS ou Linux (Bash/Zsh)
+Adicione esta linha ao seu ficheiro `.bashrc` ou `.zshrc` para que a alteração seja permanente:
+```bash
+export PATH="$HOME/.jorm/bin:$PATH"
+```
+
+#### No Windows (PowerShell)
+Para adicionar ao PATH na sessão atual:
+```powershell
+$env:PATH += ";$HOME\.jorm\bin"
+```
+
+#### No Windows (Command Prompt / CMD)
+Para adicionar ao PATH na sessão atual:
+```cmd
+set PATH=%PATH%;%USERPROFILE%\.jorm\bin
+```
+
+> 💡 **Nota para Windows:** Para tornar a alteração permanente no Windows, pode pesquisar por "Editar as variáveis de ambiente do sistema" no menu Iniciar e adicionar o caminho `C:\Users\OSeuUtilizador\.jorm\bin` à variável `Path`.
+
 > **Atenção:** É estritamente necessário ter o **Java 21** instalado no sistema.
 
 ## 2. Iniciar um Novo Projeto
