@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Jorm CLI - A modern, reflection-free Java ORM",
     "homepage": "https://github.com/j-orm/jorm",
     "license": "MIT",
@@ -8,7 +8,7 @@
             "java/openjdk21"
         ]
     },
-    "url": "https://github.com/j-orm/jorm/releases/download/v0.1.0/jorm-cli-standalone.jar#/jorm.jar",
+    "url": "https://github.com/j-orm/jorm/releases/download/v0.2.0/jorm-cli-standalone.jar#/jorm.jar",
     "hash": "f1d505eb69c603b2cfccbf146ae6717579ebe8ac4dd41c0241755909236ce84c",
     "bin": [
         [
