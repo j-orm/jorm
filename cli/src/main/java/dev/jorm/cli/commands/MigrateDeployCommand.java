@@ -1,5 +1,6 @@
 package dev.jorm.cli.commands;
 
+import dev.jorm.cli.config.ConfigResolver;
 import dev.jorm.cli.output.Printer;
 import dev.jorm.cli.output.Spinner;
 import dev.jorm.db.ConnectionManager;
@@ -26,9 +27,9 @@ public class MigrateDeployCommand implements Callable<Integer> {
             
             ConnectionManager connManager;
             try {
-                connManager = ConnectionManager.fromEnv();
+                connManager = ConfigResolver.resolve(null);
             } catch (Exception ex) {
-                spinner.stopWithError(ex.getMessage() + " Please set DATABASE_URL.");
+                spinner.stopWithError(ex.getMessage());
                 return 1;
             }
 

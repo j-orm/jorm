@@ -65,6 +65,18 @@ public class JormBaseListener implements JormListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConfigKey(JormParser.ConfigKeyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConfigKey(JormParser.ConfigKeyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterModelBlock(JormParser.ModelBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}

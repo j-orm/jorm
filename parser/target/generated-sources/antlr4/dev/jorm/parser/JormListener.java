@@ -48,6 +48,16 @@ public interface JormListener extends ParseTreeListener {
 	 */
 	void exitConfigEntry(JormParser.ConfigEntryContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link JormParser#configKey}.
+	 * @param ctx the parse tree
+	 */
+	void enterConfigKey(JormParser.ConfigKeyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link JormParser#configKey}.
+	 * @param ctx the parse tree
+	 */
+	void exitConfigKey(JormParser.ConfigKeyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link JormParser#modelBlock}.
 	 * @param ctx the parse tree
 	 */

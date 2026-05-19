@@ -35,6 +35,12 @@ public interface JormVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConfigEntry(JormParser.ConfigEntryContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link JormParser#configKey}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConfigKey(JormParser.ConfigKeyContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link JormParser#modelBlock}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

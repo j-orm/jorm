@@ -18,7 +18,8 @@ schema: block* EOF;
 block: configBlock | modelBlock | enumBlock;
 
 configBlock: CONFIG '{' configEntry* '}';
-configEntry: ID '=' STRING_LIT;
+configEntry: configKey '=' STRING_LIT;
+configKey: ID ('.' ID)*;
 
 modelBlock: MODEL ID '{' field* '}';
 field: ID fieldType attribute*;

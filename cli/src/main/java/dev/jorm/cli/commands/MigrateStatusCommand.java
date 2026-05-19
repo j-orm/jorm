@@ -1,5 +1,6 @@
 package dev.jorm.cli.commands;
 
+import dev.jorm.cli.config.ConfigResolver;
 import dev.jorm.cli.output.Printer;
 import dev.jorm.db.ConnectionManager;
 import dev.jorm.db.MigrationRunner;
@@ -17,7 +18,7 @@ public class MigrateStatusCommand implements Callable<Integer> {
     public Integer call() {
         Printer.info("Checking migration status...");
         try {
-            ConnectionManager connManager = ConnectionManager.fromEnv();
+            ConnectionManager connManager = ConfigResolver.resolve(null);
             MigrationRunner runner = new MigrationRunner(connManager);
             
             List<String> applied = runner.getAppliedMigrationsPublic();

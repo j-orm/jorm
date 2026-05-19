@@ -36,7 +36,7 @@ public class JormVisitorImpl extends JormBaseVisitor<Object> {
 
     @Override
     public SchemaModel.ConfigEntry visitConfigEntry(JormParser.ConfigEntryContext ctx) {
-        String key = ctx.ID().getText();
+        String key = ctx.configKey().getText();
         String value = ctx.STRING_LIT().getText();
         // Remove quotes
         value = value.substring(1, value.length() - 1);

@@ -1,5 +1,6 @@
 package dev.jorm.cli.commands;
 
+import dev.jorm.cli.config.ConfigResolver;
 import dev.jorm.cli.output.Printer;
 import dev.jorm.cli.output.Spinner;
 import dev.jorm.db.ConnectionManager;
@@ -29,7 +30,7 @@ public class MigrateResetCommand implements Callable<Integer> {
         Spinner spinner = new Spinner("Resetting database...");
         try {
             spinner.start();
-            ConnectionManager connManager = ConnectionManager.fromEnv();
+            ConnectionManager connManager = ConfigResolver.resolve(null);
             
             try (Connection conn = connManager.getConnection();
                  Statement stmt = conn.createStatement()) {

@@ -40,10 +40,24 @@ public class InitCommand implements Callable<Integer> {
             File schemaFile = new File(".jorm/schema.jorm");
             if (!schemaFile.exists()) {
                 String initialSchema = String.format("""
+                        // -----------------------------------------------------------------------------
+                        // Database Connection Config
+                        // -----------------------------------------------------------------------------
+                        // The CLI automatically tries to discover your database using this priority:
+                        // 1. DATABASE_URL environment variable
+                        // 2. .env file in the root directory (DATABASE_URL=...)
+                        // 3. application.properties or application.yml (spring.datasource.url)
+                        // 4. docker-compose.yml (extracting ports and credentials)
+                        // 5. database.url inside this config block
+                        // -----------------------------------------------------------------------------
                         config {
                             database = "%s"
                             output = "%s"
                             package = "%s"
+                            // Uncomment to configure connection manually here:
+                            // database.url = "jdbc:postgresql://localhost:5432/mydb"
+                            // database.username = "postgres"
+                            // database.password = "password"
                         }
                         
                         model User {
