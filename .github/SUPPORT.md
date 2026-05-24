@@ -8,7 +8,7 @@ https://github.com/j-orm/jorm/discussions
 If the page is not enabled yet, a maintainer can enable it in:
 Settings -> General -> Features -> Discussions.
 
-## Bugs and feature requests
+
 
 Open an issue and include:
 

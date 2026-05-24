@@ -5,7 +5,8 @@
 
   **The Modern, Schema-First, Reflection-Free ORM for Java 21+**
 
-  [![Maven Central](https://img.shields.io/maven-central/v/pt.jorm/jorm-spring-boot-starter?color=blue&label=Maven%20Central)](https://central.sonatype.com/namespace/pt.jorm)
+  [![Recommended (0.1.x)](https://img.shields.io/maven-central/v/pt.jorm/jorm-spring-boot-starter?color=blue&label=Recommended%20%280.1.x%29&versionPrefix=0.1)](https://central.sonatype.com/namespace/pt.jorm)
+  [![Highest (all versions)](https://img.shields.io/maven-central/v/pt.jorm/jorm-spring-boot-starter?color=blue&label=Highest%20%28all%20versions%29)](https://central.sonatype.com/namespace/pt.jorm)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![Java 21+](https://img.shields.io/badge/Java-21%2B-ED8B00?logo=java)](https://adoptium.net/)
 
