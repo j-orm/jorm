@@ -1,0 +1,47 @@
+name: Bug report
+description: Reportar um problema no Jorm
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Descrição
+      description: O que aconteceu e o que esperavas que acontecesse?
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Versão
+      description: Exemplo: CLI 0.1.1, jorm-spring-boot-starter 0.1.1
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Sistema operativo
+      description: Exemplo: Windows 11, macOS, Ubuntu
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      description: Lista de passos, de preferência com um exemplo mínimo
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs/stack trace
+      description: Coloca logs relevantes. Remove segredos, tokens e passwords.
+      render: shell
