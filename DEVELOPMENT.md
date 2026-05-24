@@ -1,70 +1,70 @@
-# Guia de Desenvolvimento
+# Development Guide
 
-Este documento descreve como desenvolver e contribuir para o Jorm no repositório principal.
+This document explains how to develop and contribute to Jorm in the main repository.
 
-## Requisitos
+## Requirements
 
 - Java 21 (JDK)
 - Git
-- Maven 3.9+ (recomendado) ou o Maven incluído no repositório (`apache-maven-3.9.6`)
-- Docker (opcional, útil para testes com bases de dados)
+- Maven 3.9+ (recommended), or the Maven bundled in the repository (`apache-maven-3.9.6`)
+- Docker (optional, useful for database tests)
 
-## Estrutura do repositório
+## Repository structure
 
-O repositório é um multi-módulo Maven:
+This is a Maven multi-module repository:
 
-- `core`: modelos e tipos partilhados
-- `parser`: gramática ANTLR e parser do schema
-- `generator`: geração de Java e SQL
-- `client`: runtime do cliente
-- `db`: adapters e runner de migrations
-- `cli`: CLI (gera também o jar standalone)
-- `jorm-spring-boot-starter`: integração Spring Boot
+- `core`: shared models and types
+- `parser`: ANTLR grammar and schema parser
+- `generator`: Java and SQL generation
+- `client`: client runtime
+- `db`: database adapters and migration runner
+- `cli`: CLI (also builds the standalone jar)
+- `jorm-spring-boot-starter`: Spring Boot integration
 
-## Setup local
+## Local setup
 
 ```bash
 git clone https://github.com/j-orm/jorm.git
 cd jorm
 ```
 
-### Java no Windows (nota)
+### Windows Java note
 
-Se o Maven falhar com `JAVA_HOME not found`, define o `JAVA_HOME` para o teu JDK.
+If Maven fails with `JAVA_HOME not found`, set `JAVA_HOME` to your JDK.
 
 ## Build
 
-### Build completo (tudo)
+### Full build
 
 ```bash
 mvn -DskipTests package
 ```
 
-### Build da CLI standalone
+### Build the standalone CLI
 
 ```bash
 mvn -pl cli -am -DskipTests package
 ```
 
-O jar gerado fica em:
+The generated jar is located at:
 
 - `cli/target/jorm-cli-standalone.jar`
 
-## Executar a CLI localmente
+## Run the CLI locally
 
 ```bash
 java -jar cli/target/jorm-cli-standalone.jar --help
 ```
 
-## Testes
+## Tests
 
 ```bash
 mvn test
 ```
 
-## Trabalhar no schema e geração
+## Working on schema and generation
 
-Para testar a geração de código, usa o projecto de exemplo em `src/main/java/generated` ou cria um projecto de teste local com:
+To test code generation, use the example project in `src/main/java/generated` or create a local test project with:
 
 ```bash
 jorm init
@@ -72,21 +72,21 @@ jorm validate
 jorm generate
 ```
 
-## Convenções de código
+## Code conventions
 
-- Código e identificadores em inglês.
-- Evitar reflexão no runtime.
-- Preferir imutabilidade.
-- Alterações pequenas e focadas por PR.
-- Mensagens de commit em inglês e no formato Conventional Commits.
+- Code and identifiers in English.
+- Avoid reflection at runtime.
+- Prefer immutability.
+- Keep PRs small and focused.
+- Commit messages in English using Conventional Commits.
 
 ## Releases
 
-O processo de release é automatizado por GitHub Actions:
+The release process is automated via GitHub Actions:
 
-1. Garantir que `main` está verde.
-2. Criar tag anotada `vX.Y.Z` no commit a lançar e fazer push da tag.
-3. O workflow [release.yml](file:///c:/Projects/jorm-project/jorm/.github/workflows/release.yml) cria a GitHub Release e faz upload do jar.
-4. O workflow [publish-maven.yml](file:///c:/Projects/jorm-project/jorm/.github/workflows/publish-maven.yml) publica no Maven Central quando a release é publicada.
+1. Make sure `main` is green.
+2. Create an annotated tag `vX.Y.Z` on the commit you want to release, then push the tag.
+3. The workflow `.github/workflows/release.yml` creates the GitHub Release and uploads the jar.
+4. The workflow `.github/workflows/publish-maven.yml` publishes to Maven Central when the release is published.
 
-Nota: o Maven Central é imutável. Para correcções, publica sempre uma versão nova.
+Note: Maven Central is immutable. For fixes, always publish a new version.

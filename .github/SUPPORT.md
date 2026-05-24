@@ -1,18 +1,18 @@
-# Suporte
+# Support
 
-## Perguntas e discussão
+## Questions and discussion
 
-Usa o GitHub Discussions:
+Use GitHub Discussions:
 https://github.com/j-orm/jorm/discussions
 
-Se a página ainda não estiver activa, um maintainer pode activar em:
+If the page is not enabled yet, a maintainer can enable it in:
 Settings -> General -> Features -> Discussions.
 
-## Bugs e pedidos de funcionalidades
+## Bugs and feature requests
 
-Abre um issue e inclui:
+Open an issue and include:
 
-- versão do Jorm (CLI e dependências Java)
-- sistema operativo
-- passos para reproduzir
-- logs relevantes (sem segredos)
+- Jorm version (CLI and Java dependencies)
+- operating system
+- steps to reproduce
+- relevant logs (no secrets)

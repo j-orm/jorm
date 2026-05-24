@@ -1,13 +1,13 @@
-## O que muda
+## What changes
 
 - 
 
-## Como testar
+## How to test
 
 - 
 
 ## Checklist
 
-- [ ] Build passa localmente
-- [ ] Testes adicionados/ajustados (quando aplicável)
-- [ ] Documentação actualizada (quando aplicável)
+- [ ] Build passes locally
+- [ ] Tests added or updated (when applicable)
+- [ ] Documentation updated (when applicable)

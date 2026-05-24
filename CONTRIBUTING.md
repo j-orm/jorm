@@ -1,46 +1,46 @@
-# Contribuir para o Jorm
+# Contributing to Jorm
 
-Obrigado por ajudares a melhorar o Jorm.
+Thanks for helping improve Jorm.
 
-## Onde pedir ajuda
+## Where to ask questions
 
-- Perguntas e discussão de ideias: https://github.com/j-orm/jorm/discussions
-- Bugs e tarefas: Issues do repositório
+- Questions and ideas: https://github.com/j-orm/jorm/discussions
+- Bugs and tasks: repository Issues
 
-Se a página de Discussions ainda não estiver activa, um maintainer pode activar em:
+If the Discussions page is not enabled yet, a maintainer can enable it in:
 Settings -> General -> Features -> Discussions.
 
-## Reportar bugs
+## Reporting bugs
 
-Antes de abrir um issue:
+Before opening an issue:
 
-- Confirma se já existe um issue aberto.
-- Inclui versão do Jorm, sistema operativo e passos para reproduzir.
-- Anexa logs relevantes (sem segredos).
+- Check if the issue already exists.
+- Include the Jorm version, operating system, and steps to reproduce.
+- Attach relevant logs (no secrets).
 
-## Propor uma funcionalidade
+## Requesting a feature
 
-- Descreve o problema que queres resolver.
-- Sugere uma API e exemplos de uso.
-- Se possível, explica impacto em compatibilidade e migrações.
+- Describe the problem you want to solve.
+- Propose an API and usage examples.
+- If possible, explain compatibility and migration impact.
 
-## Workflow de desenvolvimento
+## Development workflow
 
-1. Cria um branch a partir de `main`.
-2. Faz alterações pequenas e focadas.
-3. Adiciona ou ajusta testes quando fizer sentido.
-4. Garante que o build passa localmente.
-5. Abre um Pull Request.
+1. Create a branch from `main`.
+2. Keep changes small and focused.
+3. Add or update tests when applicable.
+4. Make sure the build passes locally.
+5. Open a Pull Request.
 
-## Convenções
+## Conventions
 
-- Código e identificadores em inglês.
-- Sem reflexão no runtime.
-- Preferir imutabilidade.
+- Code and identifiers in English.
+- No runtime reflection.
+- Prefer immutability.
 
 ## Commits
 
-Usar Conventional Commits (mensagens em inglês):
+Use Conventional Commits (messages in English):
 
 - `feat: add ...`
 - `fix: ...`
@@ -51,6 +51,6 @@ Usar Conventional Commits (mensagens em inglês):
 
 ## Pull Requests
 
-- Descreve claramente o que muda e porquê.
-- Mantém o PR pequeno (uma mudança lógica).
-- Liga issues relacionados (ex: `Closes #123`).
+- Clearly describe what changes and why.
+- Keep the PR small (one logical change).
+- Link related issues (for example: `Closes #123`).

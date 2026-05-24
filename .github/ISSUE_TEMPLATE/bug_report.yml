@@ -1,37 +1,37 @@
 name: Bug report
-description: Reportar um problema no Jorm
+description: Report an issue in Jorm
 title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: textarea
     id: description
     attributes:
-      label: Descrição
-      description: O que aconteceu e o que esperavas que acontecesse?
+      label: Description
+      description: What happened, and what did you expect to happen?
     validations:
       required: true
 
   - type: input
     id: version
     attributes:
-      label: Versão
-      description: Exemplo: CLI 0.1.1, jorm-spring-boot-starter 0.1.1
+      label: Version
+      description: Example: CLI 0.1.1, jorm-spring-boot-starter 0.1.1
     validations:
       required: true
 
   - type: input
     id: os
     attributes:
-      label: Sistema operativo
-      description: Exemplo: Windows 11, macOS, Ubuntu
+      label: Operating system
+      description: Example: Windows 11, macOS, Ubuntu
     validations:
       required: true
 
   - type: textarea
     id: steps
     attributes:
-      label: Passos para reproduzir
-      description: Lista de passos, de preferência com um exemplo mínimo
+      label: Steps to reproduce
+      description: List the steps, ideally with a minimal example
       placeholder: |
         1. ...
         2. ...
@@ -43,5 +43,5 @@ body:
     id: logs
     attributes:
       label: Logs/stack trace
-      description: Coloca logs relevantes. Remove segredos, tokens e passwords.
+      description: Include relevant logs. Remove secrets, tokens, and passwords.
       render: shell
