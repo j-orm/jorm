@@ -6,7 +6,7 @@
     <parent>
         <groupId>pt.jorm</groupId>
         <artifactId>jorm-parent</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </parent>
     <artifactId>jorm-parser</artifactId>
     <name>Jorm Parser</name>
