@@ -29,21 +29,21 @@ sdk install jorm
 If you don't use any package manager, you can install the CLI directly using our official script:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/j-orm/jorm/main/install.sh | bash
 ```
 
 **On Windows (PowerShell):**
 For Windows developers who prefer not to use Scoop, we provide a native script:
 
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/main/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
 **On Windows (Command Prompt / CMD):**
 If you are using the classic CMD, you can delegate the execution to PowerShell with this command:
 
 ```cmd
-powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
+powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/main/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
 ### ⚙️ Configure PATH

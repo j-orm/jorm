@@ -3,6 +3,8 @@
   <p><strong>The Modern, Schema-First, and Reflection-Free ORM for the Java Ecosystem</strong></p>
   
   [![Status](https://img.shields.io/badge/status-BETA-orange.svg)]()
+  [![Recommended (0.1.x)](https://img.shields.io/maven-central/v/pt.jorm/jorm-spring-boot-starter?color=blue&label=Recommended%20%280.1.x%29&versionPrefix=0.1)](https://central.sonatype.com/namespace/pt.jorm)
+  [![Highest (all versions)](https://img.shields.io/maven-central/v/pt.jorm/jorm-spring-boot-starter?color=blue&label=Highest%20%28all%20versions%29)](https://central.sonatype.com/namespace/pt.jorm)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![Java 21](https://img.shields.io/badge/Java-21%2B-blue.svg)]()
 </div>
@@ -122,17 +124,17 @@ scoop install jorm
 
 **On macOS or Linux (Bash/Zsh):**
 ```bash
-curl -sSL https://raw.githubusercontent.com/j-orm/jorm/master/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/j-orm/jorm/main/install.sh | bash
 ```
 
 **On Windows (PowerShell):**
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/j-orm/jorm/main/install.ps1" -OutFile "install.ps1"; .\install.ps1; Remove-Item install.ps1
 ```
 
 **On Windows (Command Prompt / CMD):**
 ```cmd
-powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/master/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
+powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/j-orm/jorm/main/install.ps1' -OutFile 'install.ps1'; .\install.ps1; Remove-Item install.ps1"
 ```
 
 ### ⚙️ Configure PATH
