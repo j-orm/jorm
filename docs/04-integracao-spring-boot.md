@@ -12,11 +12,11 @@ Add the official Jorm starter to your `pom.xml`:
 <dependency>
     <groupId>pt.jorm</groupId>
     <artifactId>jorm-spring-boot-starter</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
-> Always check for the latest stable version in the official repository.
+> Tip: Maven Central badges often show the highest version across all releases. If you want the latest 0.1.x line, use the recommended badge with a 0.1 prefix filter.
 
 ---
 
