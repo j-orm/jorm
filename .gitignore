@@ -32,8 +32,7 @@ buildNumber.properties
 .DS_Store
 Thumbs.db
 
-# IDE / Custom Editor Files
-.trae/
+
 
 DEVELOPMENT.md
 testejorm/
