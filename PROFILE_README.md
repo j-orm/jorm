@@ -24,7 +24,7 @@ By leveraging Java 21 Records and compile-time code generation, Jorm provides bl
 
 * 🏗️ **Schema-First:** Define your entire data model in a clean, readable `.jorm` file. Your schema is the single source of truth.
 * ⚡ **Zero Reflection:** No more slow startup times or runtime proxy magic. Jorm generates pure, native Java code.
-* 🛡️ **100% Type-Safe:** Catch database errors at compile-time. If your schema changes, your code breaks immediately—saving you from production bugs.
+* 🛡️ **100% Type-Safe:** Catch database errors at compile-time. If your schema changes, your code breaks immediately, saving you from production bugs.
 * 🍃 **Spring Boot Native:** First-class support for Spring Boot via our dedicated starter.
 
 ---
