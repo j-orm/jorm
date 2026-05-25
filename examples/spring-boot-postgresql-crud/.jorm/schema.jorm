@@ -1,0 +1,12 @@
+config {
+    database  = "postgresql"
+    output    = "src/main/java/generated"
+    package   = "com.example.jormcrud.db"
+    framework = "spring"
+}
+
+model AppUser {
+    id Int @id @autoincrement
+    email String @unique
+    name String
+}
