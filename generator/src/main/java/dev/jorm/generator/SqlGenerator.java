@@ -41,11 +41,12 @@ public class SqlGenerator {
 
         boolean isPostgres = "postgresql".equalsIgnoreCase(dialect);
         boolean isMysql = "mysql".equalsIgnoreCase(dialect);
+        String quote = isMysql ? "`" : "\"";
 
         // 1. Generate ENUMs (if supported by dialect, e.g., PostgreSQL)
         if (isPostgres) {
             for (SchemaModel.EnumModel enumModel : schema.enums()) {
-                sql.append("CREATE TYPE ").append(enumModel.name()).append(" AS ENUM (\n");
+                sql.append("CREATE TYPE ").append(quote).append(enumModel.name()).append(quote).append(" AS ENUM (\n");
                 for (int i = 0; i < enumModel.values().size(); i++) {
                     sql.append("    '").append(enumModel.values().get(i)).append("'");
                     if (i < enumModel.values().size() - 1) {
@@ -59,7 +60,7 @@ public class SqlGenerator {
 
         // 2. Generate TABLES
         for (SchemaModel.EntityModel entityModel : schema.models()) {
-            sql.append("CREATE TABLE ").append(entityModel.name()).append(" (\n");
+            sql.append("CREATE TABLE ").append(quote).append(entityModel.name()).append(quote).append(" (\n");
 
             // Filter out relationship fields (arrays or complex types that are not Enums and not Native)
             List<SchemaModel.FieldModel> physicalFields = entityModel.fields().stream()
@@ -68,7 +69,7 @@ public class SqlGenerator {
 
             for (int i = 0; i < physicalFields.size(); i++) {
                 SchemaModel.FieldModel field = physicalFields.get(i);
-                sql.append("    ").append(field.name()).append(" ").append(mapToSqlType(field, isMysql));
+                sql.append("    ").append(quote).append(field.name()).append(quote).append(" ").append(mapToSqlType(field, isMysql));
 
                 // Process Attributes (e.g., @id, @unique)
                 for (SchemaModel.AttributeModel attr : field.attributes()) {

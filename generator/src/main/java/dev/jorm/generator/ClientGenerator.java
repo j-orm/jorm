@@ -31,6 +31,16 @@ public class ClientGenerator {
     }
 
     public void generate() throws IOException {
+        String dialect = "postgresql";
+        if (schema.config() != null) {
+            for (SchemaModel.ConfigEntry entry : schema.config()) {
+                if ("database".equals(entry.key())) {
+                    dialect = entry.value();
+                }
+            }
+        }
+        String quote = "mysql".equalsIgnoreCase(dialect) ? "`" : "\\\"";
+
         for (SchemaModel.EntityModel entityModel : schema.models()) {
             String clientClassName = entityModel.name() + "Client";
             ClassName modelClass = ClassName.get(packageName, entityModel.name());
@@ -62,10 +72,10 @@ public class ClientGenerator {
             TypeSpec intFilter = generateIntFilter();
             clientBuilder.addType(intFilter);
 
-            TypeSpec whereBuilder = generateWhereBuilder(entityModel);
+            TypeSpec whereBuilder = generateWhereBuilder(entityModel, quote);
             clientBuilder.addType(whereBuilder);
 
-            TypeSpec dataBuilder = generateDataBuilder(entityModel);
+            TypeSpec dataBuilder = generateDataBuilder(entityModel, quote);
             clientBuilder.addType(dataBuilder);
             
             TypeSpec includeBuilder = generateIncludeBuilder(entityModel);
@@ -75,7 +85,7 @@ public class ClientGenerator {
             MethodSpec findMany = MethodSpec.methodBuilder("findMany")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(ParameterizedTypeName.get(ClassName.get(List.class), modelClass))
-                    .addStatement("String sql = $S", "SELECT * FROM " + entityModel.name())
+                    .addStatement("String sql = $S", "SELECT * FROM " + quote + entityModel.name() + quote)
                     .addStatement("return executor.executeQuery(sql, this::mapRow)")
                     .build();
             clientBuilder.addMethod(findMany);
@@ -87,7 +97,7 @@ public class ClientGenerator {
                     .returns(ParameterizedTypeName.get(ClassName.get(List.class), modelClass))
                     .addStatement("WhereBuilder builder = new WhereBuilder()")
                     .addStatement("consumer.accept(builder)")
-                    .addStatement("String sql = $S + String.join($S, builder.conditions)", "SELECT * FROM " + entityModel.name() + " WHERE ", " AND ")
+                    .addStatement("String sql = $S + String.join($S, builder.conditions)", "SELECT * FROM " + quote + entityModel.name() + quote + " WHERE ", " AND ")
                     .addStatement("return executor.executeQuery(sql, this::mapRow, builder.parameters.toArray())")
                     .build();
             clientBuilder.addMethod(findManyFluent);
@@ -128,7 +138,7 @@ public class ClientGenerator {
                     .addStatement("consumer.accept(builder)")
                     .addStatement("String cols = String.join($S, builder.columns)", ", ")
                     .addStatement("String placeholders = builder.columns.stream().map(c -> $S).collect($T.joining($S))", "?", Collectors.class, ", ")
-                    .addStatement("String sql = $S + cols + $S + placeholders + $S", "INSERT INTO " + entityModel.name() + " (", ") VALUES (", ")")
+                    .addStatement("String sql = $S + cols + $S + placeholders + $S", "INSERT INTO " + quote + entityModel.name() + quote + " (", ") VALUES (", ")")
                     .addStatement("executor.executeUpdate(sql, builder.values.toArray())")
                     .addStatement("return null") 
                     .build();
@@ -143,7 +153,7 @@ public class ClientGenerator {
                     .addStatement("DataBuilder builder = new DataBuilder()")
                     .addStatement("consumer.accept(builder)")
                     .addStatement("String setClause = builder.columns.stream().map(c -> c + $S).collect($T.joining($S))", " = ?", Collectors.class, ", ")
-                    .addStatement("String sql = $S + setClause + $S", "UPDATE " + entityModel.name() + " SET ", " WHERE " + idField.name() + " = ?")
+                    .addStatement("String sql = $S + setClause + $S", "UPDATE " + quote + entityModel.name() + quote + " SET ", " WHERE " + quote + idField.name() + quote + " = ?")
                     .addStatement("$T<Object> params = new $T<>(builder.values)", List.class, ArrayList.class)
                     .addStatement("params.add(id)")
                     .addStatement("executor.executeUpdate(sql, params.toArray())")
@@ -156,7 +166,7 @@ public class ClientGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(idJavaType, "id")
                     .returns(modelClass)
-                    .addStatement("String sql = $S", "SELECT * FROM " + entityModel.name() + " WHERE " + idField.name() + " = ?")
+                    .addStatement("String sql = $S", "SELECT * FROM " + quote + entityModel.name() + quote + " WHERE " + quote + idField.name() + quote + " = ?")
                     .addStatement("$T<$T> results = executor.executeQuery(sql, this::mapRow, id)", List.class, modelClass)
                     .addStatement("return results.isEmpty() ? null : results.get(0)")
                     .build();
@@ -183,7 +193,7 @@ public class ClientGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(idJavaType, "id")
                     .returns(void.class)
-                    .addStatement("String sql = $S", "DELETE FROM " + entityModel.name() + " WHERE " + idField.name() + " = ?")
+                    .addStatement("String sql = $S", "DELETE FROM " + quote + entityModel.name() + quote + " WHERE " + quote + idField.name() + quote + " = ?")
                     .addStatement("executor.executeUpdate(sql, id)")
                     .build();
             clientBuilder.addMethod(delete);
@@ -366,7 +376,7 @@ public class ClientGenerator {
         };
     }
 
-    private TypeSpec generateWhereBuilder(SchemaModel.EntityModel entityModel) {
+    private TypeSpec generateWhereBuilder(SchemaModel.EntityModel entityModel, String quote) {
         TypeSpec.Builder builder = TypeSpec.classBuilder("WhereBuilder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
@@ -386,7 +396,7 @@ public class ClientGenerator {
             builder.addMethod(MethodSpec.methodBuilder(field.name())
                     .addModifiers(Modifier.PUBLIC)
                     .returns(filterClass)
-                    .addStatement("return new $T(this, $S)", filterClass, field.name())
+                    .addStatement("return new $T(this, $S)", filterClass, quote + field.name() + quote)
                     .build());
         }
 
@@ -581,7 +591,7 @@ public class ClientGenerator {
                 || type.equals("Boolean") || type.equals("DateTime");
     }
 
-    private TypeSpec generateDataBuilder(SchemaModel.EntityModel entityModel) {
+    private TypeSpec generateDataBuilder(SchemaModel.EntityModel entityModel, String quote) {
         TypeSpec.Builder builder = TypeSpec.classBuilder("DataBuilder")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
@@ -603,7 +613,7 @@ public class ClientGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(getJavaType(field.type()), "value")
                     .returns(ClassName.bestGuess("DataBuilder"))
-                    .addStatement("this.columns.add($S)", field.name())
+                    .addStatement("this.columns.add($S)", quote + field.name() + quote)
                     .addStatement("this.values.add(value)")
                     .addStatement("return this")
                     .build());

@@ -169,6 +169,10 @@ We have prepared a detailed step-by-step guide in the `docs/` folder to help you
 3. [CLI Commands and Migrations](docs/03-comandos-cli.md)
 4. [Spring Boot Integration](docs/04-integracao-spring-boot.md)
 
+## Examples
+
+- [Spring Boot + PostgreSQL CRUD](examples/spring-boot-postgresql-crud/README.md)
+
 ---
 
 ## 🤝 How to Contribute
