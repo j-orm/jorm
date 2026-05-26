@@ -39,7 +39,7 @@ public class ClientGenerator {
                 }
             }
         }
-        String quote = "mysql".equalsIgnoreCase(dialect) ? "`" : "\\\"";
+        String quote = "mysql".equalsIgnoreCase(dialect) ? "`" : "\"";
 
         for (SchemaModel.EntityModel entityModel : schema.models()) {
             String clientClassName = entityModel.name() + "Client";
@@ -216,7 +216,7 @@ public class ClientGenerator {
         ClassName queryExecutorClass = ClassName.get("dev.jorm.db", "QueryExecutor");
 
         TypeSpec.Builder mainClientBuilder = TypeSpec.classBuilder("Jorm")
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+                .addModifiers(Modifier.PUBLIC);
 
         boolean isSpring = false;
         if (schema.config() != null) {
@@ -278,8 +278,13 @@ public class ClientGenerator {
             
             if (isNativeType(field.type())) {
                 String resultSetMethod = getResultSetMethod(field.type());
-                mapperBuilder.addStatement("$T _$L = rs.$L($S)", 
-                        getJavaType(field.type()), field.name(), resultSetMethod, field.name());
+                if ("DateTime".equals(field.type())) {
+                    mapperBuilder.addStatement("$T _$L = rs.getTimestamp($S) != null ? rs.getTimestamp($S).toLocalDateTime() : null",
+                            getJavaType(field.type()), field.name(), field.name(), field.name());
+                } else {
+                    mapperBuilder.addStatement("$T _$L = rs.$L($S)",
+                            getJavaType(field.type()), field.name(), resultSetMethod, field.name());
+                }
             } else {
                 // For relation fields, initialize with null or empty list
                 if (field.isArray()) {

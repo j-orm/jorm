@@ -11,7 +11,7 @@ import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "jorm", mixinStandardHelpOptions = true, version = "Jorm 0.1.3",
+@Command(name = "jorm", mixinStandardHelpOptions = true, version = "Jorm 0.1.4",
         description = "Jorm: A Schema-First Modern ORM for Java",
         subcommands = {
                 InitCommand.class,
