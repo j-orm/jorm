@@ -3,6 +3,7 @@ package dev.jorm.cli.commands;
 import dev.jorm.cli.config.ConfigResolver;
 import dev.jorm.cli.output.Printer;
 import dev.jorm.cli.output.Spinner;
+import dev.jorm.cli.util.ExceptionUtils;
 import dev.jorm.db.ConnectionManager;
 import dev.jorm.db.MigrationRunner;
 import dev.jorm.generator.SqlGenerator;
@@ -68,10 +69,11 @@ public class MigrateDevCommand implements Callable<Integer> {
             return 0;
         } catch (Exception e) {
             if (spinner != null) {
-                spinner.stopWithError("Error generating the migration: " + e.getMessage());
+                spinner.stopWithError("Erro ao gerar/aplicar a migração. " + ExceptionUtils.userMessage(e));
             } else {
-                Printer.error("Error generating the migration: " + e.getMessage());
+                Printer.error("Erro ao gerar/aplicar a migração. " + ExceptionUtils.userMessage(e));
             }
+            ExceptionUtils.maybePrintDebug(e);
             return 1;
         }
     }

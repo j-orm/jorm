@@ -10,6 +10,10 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -25,23 +29,24 @@ public class ConfigResolver {
         String envUrl = System.getenv("DATABASE_URL");
         if (envUrl != null && !envUrl.isEmpty()) {
             Printer.info("Using database configuration from Environment Variable (DATABASE_URL)");
-            return createConnectionManager(envUrl, null, null);
+            String envUser = System.getenv("DATABASE_USERNAME");
+            String envPass = System.getenv("DATABASE_PASSWORD");
+            ParsedDbUrl parsed = parseDbUrl(envUrl, envUser, envPass);
+            return createConnectionManager(parsed.jdbcUrl(), parsed.username(), parsed.password());
         }
 
         // 2. .env file
         File envFile = new File(".env");
         if (envFile.exists()) {
             try {
-                List<String> lines = Files.readAllLines(envFile.toPath());
-                for (String line : lines) {
-                    if (line.trim().startsWith("DATABASE_URL=")) {
-                        String val = line.substring(line.indexOf('=') + 1).trim();
-                        if (val.startsWith("\"") && val.endsWith("\"")) {
-                            val = val.substring(1, val.length() - 1);
-                        }
-                        Printer.info("Using database configuration from .env file");
-                        return createConnectionManager(val, null, null);
-                    }
+                Map<String, String> env = readDotEnv(envFile);
+                String dotenvUrl = env.get("DATABASE_URL");
+                if (dotenvUrl != null && !dotenvUrl.isBlank()) {
+                    String dotenvUser = env.get("DATABASE_USERNAME");
+                    String dotenvPass = env.get("DATABASE_PASSWORD");
+                    Printer.info("Using database configuration from .env file");
+                    ParsedDbUrl parsed = parseDbUrl(dotenvUrl, dotenvUser, dotenvPass);
+                    return createConnectionManager(parsed.jdbcUrl(), parsed.username(), parsed.password());
                 }
             } catch (Exception e) {
                 Printer.warn("Failed to read .env file: " + e.getMessage());
@@ -188,6 +193,121 @@ public class ConfigResolver {
         }
 
         throw new RuntimeException("Could not find database configuration. Please define DATABASE_URL, or use .env, application.properties, docker-compose.yml or schema.jorm");
+    }
+
+    private record ParsedDbUrl(String jdbcUrl, String username, String password) {}
+
+    private static ParsedDbUrl parseDbUrl(String url, String username, String password) {
+        String jdbcUrl = url;
+        String user = username;
+        String pass = password;
+
+        if (jdbcUrl.startsWith("postgresql://") || jdbcUrl.startsWith("mysql://")) {
+            URI uri = URI.create(jdbcUrl);
+            String scheme = uri.getScheme();
+            String host = uri.getHost();
+            int port = uri.getPort();
+            String path = uri.getPath();
+            if (host == null || path == null || path.isBlank()) {
+                return new ParsedDbUrl("jdbc:" + jdbcUrl, user, pass);
+            }
+
+            String userInfo = uri.getUserInfo();
+            if ((user == null || user.isBlank()) && userInfo != null && !userInfo.isBlank()) {
+                int idx = userInfo.indexOf(':');
+                if (idx >= 0) {
+                    user = userInfo.substring(0, idx);
+                    pass = idx < userInfo.length() - 1 ? userInfo.substring(idx + 1) : "";
+                } else {
+                    user = userInfo;
+                }
+            }
+
+            if (port == -1) {
+                port = "mysql".equalsIgnoreCase(scheme) ? 3306 : 5432;
+            }
+
+            jdbcUrl = "jdbc:" + scheme + "://" + host + ":" + port + path;
+            return new ParsedDbUrl(jdbcUrl, blankToNull(user), blankToNull(pass));
+        }
+
+        if (jdbcUrl.startsWith("jdbc:")) {
+            ParsedDbUrl fromQuery = parseQueryCredentials(jdbcUrl);
+            if (isBlank(user) && !isBlank(fromQuery.username())) {
+                user = fromQuery.username();
+            }
+            if (isBlank(pass) && !isBlank(fromQuery.password())) {
+                pass = fromQuery.password();
+            }
+            return new ParsedDbUrl(jdbcUrl, blankToNull(user), blankToNull(pass));
+        }
+
+        return new ParsedDbUrl(jdbcUrl, blankToNull(user), blankToNull(pass));
+    }
+
+    private static ParsedDbUrl parseQueryCredentials(String jdbcUrl) {
+        int q = jdbcUrl.indexOf('?');
+        if (q < 0 || q >= jdbcUrl.length() - 1) {
+            return new ParsedDbUrl(jdbcUrl, null, null);
+        }
+        String query = jdbcUrl.substring(q + 1);
+        String user = null;
+        String pass = null;
+        for (String pair : query.split("&")) {
+            int eq = pair.indexOf('=');
+            if (eq < 0) {
+                continue;
+            }
+            String key = URLDecoder.decode(pair.substring(0, eq), StandardCharsets.UTF_8);
+            String val = URLDecoder.decode(pair.substring(eq + 1), StandardCharsets.UTF_8);
+            if ("user".equalsIgnoreCase(key) || "username".equalsIgnoreCase(key)) {
+                user = val;
+            } else if ("password".equalsIgnoreCase(key)) {
+                pass = val;
+            }
+        }
+        return new ParsedDbUrl(jdbcUrl, blankToNull(user), blankToNull(pass));
+    }
+
+    private static Map<String, String> readDotEnv(File envFile) throws Exception {
+        Map<String, String> map = new HashMap<>();
+        List<String> lines = Files.readAllLines(envFile.toPath());
+        for (String line : lines) {
+            String trimmed = line.trim();
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
+                continue;
+            }
+            if (trimmed.startsWith("export ")) {
+                trimmed = trimmed.substring("export ".length()).trim();
+            }
+            int idx = trimmed.indexOf('=');
+            if (idx <= 0) {
+                continue;
+            }
+            String key = trimmed.substring(0, idx).trim();
+            String val = trimmed.substring(idx + 1).trim();
+            val = stripQuotes(val);
+            map.put(key, val);
+        }
+        return map;
+    }
+
+    private static String stripQuotes(String val) {
+        if (val == null) {
+            return null;
+        }
+        if ((val.startsWith("\"") && val.endsWith("\"")) || (val.startsWith("'") && val.endsWith("'"))) {
+            return val.substring(1, val.length() - 1);
+        }
+        return val;
+    }
+
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
+    }
+
+    private static String blankToNull(String s) {
+        return isBlank(s) ? null : s;
     }
 
     private static ConnectionManager createConnectionManager(String url, String username, String password) {

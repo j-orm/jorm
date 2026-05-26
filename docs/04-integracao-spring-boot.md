@@ -12,7 +12,7 @@ Add the official Jorm starter to your `pom.xml`:
 <dependency>
     <groupId>pt.jorm</groupId>
     <artifactId>jorm-spring-boot-starter</artifactId>
-    <version>0.1.2</version>
+    <version>0.1.3</version>
 </dependency>
 ```
 

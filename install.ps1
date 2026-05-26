@@ -13,7 +13,7 @@ if (-not $Version -or $Version.Trim() -eq "") {
 }
 
 if (-not $Version -or $Version.Trim() -eq "") {
-    $Version = "0.1.2"
+    $Version = "0.1.3"
 }
 
 $JormDir = Join-Path $HOME ".jorm\\bin"

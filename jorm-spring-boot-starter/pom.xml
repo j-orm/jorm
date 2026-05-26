@@ -6,7 +6,7 @@
     <parent>
         <groupId>pt.jorm</groupId>
         <artifactId>jorm-parent</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
     </parent>
 
     <artifactId>jorm-spring-boot-starter</artifactId>
